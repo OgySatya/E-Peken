@@ -1,8 +1,13 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+
 import { useRoute } from 'vue-router';
+import { useCartStore } from '../cartstore.js'
+import { ref, onMounted} from 'vue'
+
+const store = useCartStore()
 const route = useRoute()
 const detailProduct = ref({})
+const test = ref([])
 
 onMounted(() => {
     dataProduct(route.params.id)
@@ -10,10 +15,14 @@ onMounted(() => {
 async function dataProduct(id) {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
     const data = await response.json();
+    data.count = 1
     detailProduct.value = data
-    console.log(data)
 }
-
+function addData () {
+    store.product.value = detailProduct.value
+    store.addProduct()
+    console.log(store.cartData)
+}
 
 </script>
 <template>
@@ -62,7 +71,7 @@ async function dataProduct(id) {
                     </div>
                     <div class="flex">
                         <span class="title-font font-medium text-2xl text-gray-900">${{ detailProduct.price }}</span>
-                        <button
+                        <button @click="addData()"
                             class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Add
                             to Cart</button>
                     </div>

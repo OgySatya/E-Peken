@@ -1,5 +1,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { useCartStore } from '../cartstore.js'
+
+const store = useCartStore()
 
 const allProduct = ref([])
 const cari = ref('')
@@ -88,7 +91,7 @@ const filteredName = computed(() => {
             </div>
         </li>
     </ul>
-    <v-list class="grid grid-cols-3 gap-4 w-3/4 mx-auto">
+    <v-list class="grid grid-cols-3 gap-4 container mx-auto">
         <v-list-item v-for="product in paginatedData" :key="product.id"
             class="border-gray-400 border-4 rounded-lg p-5 hover:border-yellow-700">
             <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
@@ -100,9 +103,9 @@ const filteredName = computed(() => {
             </RouterLink>
             <div class="flex items-center justify-between place-self-end ">
                 <span class="text-3xl font-bold text-gray-900 ">$ {{ product.price }}</span>
-                <a
+                <button @click="store.increment()"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center">Add
-                    to cart</a>
+                    to cart</button>
             </div>
         </v-list-item>
     </v-list>
