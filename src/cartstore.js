@@ -9,8 +9,7 @@ export const useCartStore = defineStore('cart', () => {
     }
     const product = reactive({})
     function addProduct (){
-        cartData.value.push(product.value)
-        
+    cartData.value.push(product.value)
     }
   
     return { count, name, increment, addProduct, cartData, product}

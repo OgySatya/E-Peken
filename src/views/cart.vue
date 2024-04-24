@@ -10,7 +10,7 @@ console.log(store.cartData)
     <h1>My Cart</h1>
     
     <ul class="max-w-md divide-y-2 divide-gray-300">
-   <li v-for="list in store.cartData" class="py-2">
+   <li v-for="(list, index ) in store.cartData" class="py-2">
       <div class="flex items-center space-x-4 rtl:space-x-reverse">
          <div class="flex-shrink-0">
             <img class="w-16 h-16 rounded-3xl" :src="list.image">
@@ -19,12 +19,19 @@ console.log(store.cartData)
             <p class="text-sm font-medium text-gray-900 truncate">
                {{ list.title }}
             </p>
-            <p class="text-sm text-gray-500 truncate">
+            <div class="flex justify-between mx-14">
+               <p class="text-sm text-gray-500 truncate">
+               ${{ list.price }}                  
+            </p>*
+               <p class="text-sm text-gray-500 truncate">
                {{ list.count }}
             </p>
+            <button @click="++store.cartData[index].count">+</button>
          </div>
-         <div class="inline-flex items-center text-base font-semibold text-gray-900">
-            ${{ list.price }}
+            
+         </div>
+         <div class="inline-flex items-center text-lg font-semibold text-gray-900">
+            ${{ list.count*list.price }}
          </div>
       </div>
    </li>

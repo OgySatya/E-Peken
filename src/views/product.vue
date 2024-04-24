@@ -19,15 +19,49 @@ onMounted(() => {
 async function getProduct() {
     const response = await fetch("https://fakestoreapi.com/products");
     const data = await response.json();
-    allProduct.value = data
+    allProduct.value = data;
 }
 async function getProductCategory(param) {
     const response = await fetch(`https://fakestoreapi.com/products/category/${param}`);
     const data = await response.json();
-    allProduct.value = data
+    allProduct.value = data;
 }
-const currentPage = ref(1);
+let ascName = ref(true)
+function sortName() {
+  ascName.value = !ascName.value 
+  if( ascName.value === true){
+    allProduct.value = filteredName.value.slice().sort((a, b) => a.title.localeCompare(b.title));
+  }else if (ascName.value === false){
+    allProduct.value = filteredName.value.slice().sort((a, b) => b.title.localeCompare(a.title));
+  }
+  console.log(filteredName.value)
+  console.log(ascName.value)
+}
+let ascPrice = ref(true)
+function sortPrice() {
+  ascPrice.value = !ascPrice.value 
+  if( ascPrice.value === true){
+    allProduct.value = filteredName.value.slice().sort((a, b) => a.price - b.price);
+  }else if (ascPrice.value === false){
+    allProduct.value = filteredName.value.slice().sort((a, b) => b.price - a.price);
+  }
+  console.log(filteredName.value)
+  console.log(ascPrice.value)
+}
 
+let ascRating = ref(true)
+function sortRating() {
+  ascRating.value = !ascRating.value 
+  if( ascRating.value === true){
+    allProduct.value = filteredName.value.slice().sort((a, b) => a.rating.rate - b.rating.rate);
+  }else if (ascRating.value === false){
+    allProduct.value = filteredName.value.slice().sort((a, b) => b.rating.rate - a.rating.rate);
+  }
+  console.log(allProduct.value)
+  console.log(ascRating.value)
+}
+
+const currentPage = ref(1);
 const totalPages = computed(() => {
     return Math.ceil(filteredName.value.length / 6);
 });
@@ -56,13 +90,20 @@ const filteredName = computed(() => {
     )
 })
 function addCart (product) {
+  if (!store.cartData.some(item => item.title === product.title)) {
+    product.count = 1;
     store.product.value = product
-    store.addProduct()
+     store.addProduct()  
+      } else {
+        const index = store.cartData.findIndex(item => item.title === product.title)
+        ++store.cartData[index].count
+      }
     console.log(store.cartData)
 }
 
 </script>
 <template>
+  <button @click="sortPrice()" class="border bg-slate-300">11</button>
 <div class="flex w-10/12 mx-auto">
     <div
   class="relative flex h-[calc(100vh-2rem)] w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
@@ -140,35 +181,29 @@ function addCart (product) {
       <div class="overflow-hidden">
         <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
           <nav class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
-            <div role="button"
-              class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-              <div class="grid mr-4 place-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                  stroke="currentColor" aria-hidden="true" class="w-5 h-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-                </svg>
-              </div>
-              Name
+            <div role="button" @click="sortName()"
+              class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              <span class="mr-2">Name</span>
+                <svg :class="{ 'rotate-180': !ascName }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+              stroke="currentColor" aria-hidden="true" class="w-4 h-4 transition-transform">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+            </svg>
             </div>
-            <div role="button"
-              class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-              <div class="grid mr-4 place-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                  stroke="currentColor" aria-hidden="true" class="w-5 h-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-                </svg>
-              </div>
-              Price
+            <div role="button" @click="sortPrice()"
+              class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              <span class="mr-2">Price</span>
+                <svg :class="{ 'rotate-180': !ascPrice }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+              stroke="currentColor" aria-hidden="true" class="w-4 h-4 transition-transform">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+            </svg>
             </div>
-            <div role="button"
-              class="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-              <div class="grid mr-4 place-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3"
-                  stroke="currentColor" aria-hidden="true" class="w-5 h-3">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"></path>
-                </svg>
-              </div>
-              Rating
+            <div role="button" @click="sortRating()"
+            class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+              <span class="mr-2">Rating</span>
+                <svg :class="{ 'rotate-180': !ascRating }" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
+              stroke="currentColor" aria-hidden="true" class="w-4 h-4 transition-transform">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
+            </svg>
             </div>
           </nav>
         </div>
@@ -220,8 +255,8 @@ function addCart (product) {
             </svg>
         </button>
     </form>
-    <v-list class="grid grid-cols-3 gap-4 container mx-auto">
-        <v-list-item v-for="product in paginatedData" :key="product.id"
+    <ul class="grid grid-cols-3 gap-4 container mx-auto">
+        <li v-for="product in paginatedData" :key="product.id"
             class="border-gray-400 border-4 rounded-lg p-5 hover:border-yellow-700">
             <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
                 <div class="h-64 overflow-hidden content-center">
@@ -244,8 +279,8 @@ function addCart (product) {
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center">Add
                     to cart</button>
             </div>
-        </v-list-item>
-    </v-list>
+        </li>
+    </ul>
 </div>
 </div>
     <nav class="w-3/4 mt-5 mx-auto">
