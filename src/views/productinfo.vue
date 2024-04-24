@@ -2,7 +2,7 @@
 
 import { useRoute } from 'vue-router';
 import { useCartStore } from '../cartstore.js'
-import { ref, onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
 
 const store = useCartStore()
 const route = useRoute()
@@ -14,11 +14,17 @@ onMounted(() => {
 async function dataProduct(id) {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
     const data = await response.json();
+    data.count = 1
     detailProduct.value = data
 }
-function addData () {
-    store.product.value = detailProduct.value
-    store.addProduct()
+function addData() {
+    if (!store.cartData.some(item => item.title === detailProduct.value.title)) {
+        store.product.value = detailProduct.value
+        store.addProduct()
+    } else {
+        const index = store.cartData.findIndex(item => item.title === detailProduct.value.title)
+        ++store.cartData[index].count
+    }
 }
 
 </script>
@@ -26,7 +32,7 @@ function addData () {
     <section class="text-gray-700 body-font">
         <div class="container p-5 mx-auto">
             <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                <img  class="lg:w-1/2 w-fit object-cover object-center rounded border border-gray-200"
+                <img class="lg:w-1/2 w-fit object-cover object-center rounded border border-gray-200"
                     :src="detailProduct.image">
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">PRODUCT NAME</h2>
