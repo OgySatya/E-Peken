@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import{ ref, reactive } from 'vue'
+import{ ref, reactive, computed } from 'vue'
 export const useCartStore = defineStore('cart', () => {
     const cartData = ref([])
     const count = ref(0)
@@ -9,7 +9,9 @@ export const useCartStore = defineStore('cart', () => {
     function addProduct (){
     cartData.value.push(product.value)
     }
-  
+    const totalCart = computed(() => {
+      return cartData.value.reduce((acc, data) => acc += data.count, 0);
+   });
    
-    return { count, name, addProduct, cartData, product}
+    return { count, name, addProduct, cartData, product, totalCart}
   })

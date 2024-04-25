@@ -1,16 +1,14 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { useCartStore } from '../cartstore.js'
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 const store = useCartStore()
-console.log(store.cartData)
+const alamat = ref(0)
+const voucher = ref(0)
 const deleteItem = (index) => {
    store.cartData.splice(index, 1);
 }
-const totalItem = computed(() => {
-   return store.cartData.reduce((acc, data) => acc += data.count, 0);
-});
 const totalPrice = computed(() => {
    let sum = 0
    store.cartData.forEach(item => {
@@ -18,6 +16,18 @@ const totalPrice = computed(() => {
    });
    return sum.toFixed(2)
 });
+const diskon = computed(() => {
+   if(typeof voucher.value === 'number'){
+      return (totalPrice.value * voucher.value/100).toFixed(2)}
+      else{
+         return Number(alamat.value)
+      }
+   
+})||0;
+const totalPay = computed(() => {
+   return Number(alamat.value) + Number(totalPrice.value) - Number(diskon.value)
+})||0;
+
 
 </script>
 <template>
@@ -28,7 +38,7 @@ const totalPrice = computed(() => {
             <div class="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
                <div class="flex items-center justify-between pb-8 border-b border-gray-300">
                   <h2 class="font-manrope font-bold text-3xl leading-10 text-black">Shopping Cart</h2>
-                  <h2 class="font-manrope font-bold text-xl leading-8 text-gray-600">{{ totalItem }} Items</h2>
+                  <h2 class="font-manrope font-bold text-xl leading-8 text-gray-600">{{ store.totalCart }} Items</h2>
                </div>
                <div class="grid grid-cols-12 mt-8 max-md:hidden pb-6 border-b border-gray-200">
                   <div class="col-span-12 md:col-span-7">
@@ -124,111 +134,48 @@ const totalPrice = computed(() => {
                <h2 class="font-manrope font-bold text-3xl leading-10 text-black pb-8 border-b border-gray-300">
                   Order Summary</h2>
                <div class="mt-8">
+                  
                   <div class="flex items-center justify-between pb-6">
-                     <p class="font-normal text-lg leading-8 text-black">{{ totalItem }} Items</p>
+                     <p class="font-normal text-lg leading-8 text-black">{{ store.totalCart  }} Items</p>
                      <p class="font-medium text-lg leading-8 text-black">${{ totalPrice }}</p>
                   </div>
-                  <form>
-                     <label class="flex  items-center mb-1.5 text-gray-600 text-sm font-medium">Shipping
-                     </label>
-                     <div class="flex pb-6">
-                        <div class="relative w-full">
-                           <div class=" absolute left-0 top-0 py-3 px-4">
-                              <span class="font-normal text-base text-gray-300">Second Delivery</span>
-                           </div>
-                           <input type="text"
-                              class="block w-full h-11 pr-10 pl-36 min-[500px]:pl-52 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-gray-400"
-                              placeholder="$5.00">
-                           <button id="dropdown-button" data-target="dropdown-delivery"
-                              class="dropdown-toggle flex-shrink-0 z-10 inline-flex items-center py-4 px-4 text-base font-medium text-center text-gray-900 bg-transparent  absolute right-0 top-0 pl-2 "
-                              type="button">
-                              <svg class="ml-2 my-auto" width="12" height="7" viewBox="0 0 12 7" fill="none"
-                                 xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M1 1.5L4.58578 5.08578C5.25245 5.75245 5.58579 6.08579 6 6.08579C6.41421 6.08579 6.74755 5.75245 7.41421 5.08579L11 1.5"
-                                    stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                 </path>
-                              </svg>
-                           </button>
-                           <div id="dropdown-delivery" aria-labelledby="dropdown-delivery"
-                              class="z-20 hidden divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute top-10 bg-white right-0">
-                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                 aria-labelledby="dropdown-button">
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Shopping</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Images</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Finance</a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
+                  <div >
+               
+                  <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
+                  <label  class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Alamat</label>
+                  <select v-model="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                     <option :value= 10>Bali</option>
+                     <option :value= 20>Jawa</option>
+                     <option :value= 30>Sumatra</option>
+                     <option :value= 40>Kalimantan</option>
+                     <option :value= 50>Sulawesi</option>
+                     <option :value= 60>Papua</option>
+                  </select>
+                  </div>
+                  <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
+                  <label  class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Use Voucher</label>
+                  <select type="number" v-model="voucher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                     <option value ='false'>Gratis Ongkos Kirim</option>
+                     <option :value = 10>Diskon 10 %</option>
+                     <option :value = 15>Diskon 15 %</option>
+                     <option :value = 20>Diskon 20 %</option>
+                  </select>
+                  </div>
+                     <div v-if="alamat" class="ml-3 flex items-center justify-between py-2">
+                        <p class="font-medium text-xl leading-8 text-black">Ongkos Kirim</p>
+                        <p class="font-semibold text-xl leading-8 text-red-400"> +${{ alamat }}</p>
                      </div>
-                     <label class="flex items-center mb-1.5 text-gray-400 text-sm font-medium">Promo Code
-                     </label>
-                     <div class="flex pb-4 w-full">
-                        <div class="relative w-full ">
-                           <div class=" absolute left-0 top-0 py-2.5 px-4 text-gray-300">
-
-                           </div>
-                           <input type="text"
-                              class="block w-full h-11 pr-11 pl-5 py-2.5 text-base font-normal shadow-xs text-gray-900 bg-white border border-gray-300 rounded-lg placeholder-gray-500 focus:outline-gray-400 "
-                              placeholder="xxxx xxxx xxxx">
-                           <button id="dropdown-button" data-target="dropdown"
-                              class="dropdown-toggle flex-shrink-0 z-10 inline-flex items-center py-4 px-4 text-base font-medium text-center text-gray-900 bg-transparent  absolute right-0 top-0 pl-2 "
-                              type="button"><svg class="ml-2 my-auto" width="12" height="7" viewBox="0 0 12 7"
-                                 fill="none" xmlns="http://www.w3.org/2000/svg">
-                                 <path
-                                    d="M1 1.5L4.58578 5.08578C5.25245 5.75245 5.58579 6.08579 6 6.08579C6.41421 6.08579 6.74755 5.75245 7.41421 5.08579L11 1.5"
-                                    stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                 </path>
-                              </svg>
-                           </button>
-                           <div id="dropdown"
-                              class="absolute top-10 right-0 z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                              <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                 aria-labelledby="dropdown-button">
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Shopping</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Images</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">News</a>
-                                 </li>
-                                 <li>
-                                    <a href="#"
-                                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Finance</a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="flex items-center border-b border-gray-200">
-                        <button
-                           class="rounded-lg w-full bg-black py-2.5 px-4 text-white text-sm font-semibold text-center mb-8 transition-all duration-500 hover:bg-black/80">Apply</button>
+                     <div v-if="voucher" class="ml-3 flex items-center justify-between py-2">
+                        <p class="font-medium text-xl leading-8 text-black">Diskon</p>
+                        <p class="font-semibold text-xl leading-8 text-green-600">-${{diskon}}</p>
                      </div>
                      <div class="flex items-center justify-between py-8">
-                        <p class="font-medium text-xl leading-8 text-black">{{ totalItem }} Items</p>
-                        <p class="font-semibold text-xl leading-8 text-indigo-600">$ {{ totalPrice }}</p>
+                        <p class="font-semibold text-2xl leading-8 text-amber-700">Cost : </p>
+                        <p class="font-bold text-2xl leading-8 text-indigo-600">$ {{ totalPay||0 }}</p>
                      </div>
                      <button
                         class="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">Checkout</button>
-                  </form>
+                  </div>
                </div>
             </div>
          </div>

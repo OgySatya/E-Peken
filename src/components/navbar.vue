@@ -9,33 +9,69 @@ const store = useCartStore()
 </script>
 
 <template>
-  <nav
-    class="flex mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 justify-between bg-gradient-to-r from-indigo-100 via-white to-lime-100 rounded-md">
-    <ul class="flex p-1">
-      <li class="mr-6 text-2xl font-bold text-sky-500 hover:bg-gray-700 hover:text-white rounded-md px-2.5 py-1">
-        <RouterLink to="/">Home</RouterLink>
-      </li>
-      <li class="mr-6 text-2xl font-bold text-sky-500 hover:bg-gray-700 hover:text-white rounded-md px-2.5 py-1">
-        <RouterLink to="/product">Product</RouterLink>
-      </li>
-      <li class="mr-6 text-2xl font-bold text-sky-500 hover:bg-gray-700 hover:text-white rounded-md px-2.5 py-1">
-        <RouterLink to="/about">About</RouterLink>
-      </li>
-      <li class="font-sans block mt-4 lg:inline-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700">
-        <RouterLink to="/cart" class="relative flex">
-          <svg class="flex-1 w-8 h-8 fill-current" viewbox="0 0 24 24">
-            <path
-              d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z" />
-          </svg>
-          <span
-            class="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center">{{
-              store.count }}
-          </span>
-        </RouterLink>
-      </li>
-    </ul>
+  <div class="flex flex-col items-center justify-center mt-32" x-cloak x-data="appData()" x-init="appInit()">
+    <div class="flex flex-col">
+     
+        <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5
+            bg-blue-500" :style="`width: ${percent}%`"></div>
 
-  </nav>
+   
+        <nav class="flex justify-around py-2 bg-white/80
+            backdrop-blur-md shadow-md w-full
+            fixed top-0 left-0 right-0 z-10">
+
+            <h1 class="text-4xl font-extrabold grad mt-3" style="font-family: Lucida Handwriting ">
+    E-PEKEN
+  </h1>
+
+        
+            <nav class="items-center hidden space-x-8 lg:flex">
+                <router-link to="/" class="flex text-gray-600 hover:text-blue-500
+                    cursor-pointer transition-colors duration-300">
+                    Home
+                  </router-link>
+                <router-link to="/product" class="flex text-gray-600 hover:text-blue-500
+                    cursor-pointer transition-colors duration-300">
+                    Product
+                  </router-link>
+                <router-link to="/about" class="flex text-gray-600 hover:text-blue-500
+                    cursor-pointer transition-colors duration-300">
+                    about
+                  </router-link>
+
+            </nav>
+
+
+            <div class="flex items-center space-x-5">
+              
+      <router-link to="/cart" class="flex justify-center items-center">
+          <div class="relative py-2">
+        <div class=" top-4 absolute left-3">
+          <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{{ store.totalCart }}</p>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="file: mt-4 h-6 w-6 stroke-gray-700 stroke-2 ">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+        </svg>
+      </div>
+    </router-link> 
+
+                <a class="flex text-gray-600 
+                    cursor-pointer transition-colors duration-300
+                    font-semibold">
+
+                    <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path
+                            d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
+                    </svg>
+
+                    Login
+                </a>
+            </div>
+        </nav>
+    </div>
+    </div>
 </template>
 
 <style scoped></style>

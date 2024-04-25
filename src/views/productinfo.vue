@@ -79,11 +79,16 @@ function addData() {
                             to Cart</button>
                     </div>
                     <div class="mt-10">
-                        <RouterLink
-                            class="text-blue-700 text-center text-xl font-semibold p-2 px-4 border-2 border-gray-700 rounded-full"
-                            to="/product">
-                            Kembali
-                        </RouterLink>
+                        <button
+                     class="flex justify-start items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700">
+                     <svg class="transition-all duration-500 group-hover:translate-x-2 rotate-180"
+                        xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                        <path
+                           d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
+                           stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" />
+                     </svg>
+                     <RouterLink to="/product">Back to Shopping</RouterLink>
+                  </button>
                     </div>
                 </div>
             </div>

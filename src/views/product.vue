@@ -34,8 +34,7 @@ function sortName() {
   } else if (ascName.value === false) {
     allProduct.value = filteredName.value.slice().sort((a, b) => b.title.localeCompare(a.title));
   }
-  console.log(filteredName.value)
-  console.log(ascName.value)
+
 }
 let ascPrice = ref(true)
 function sortPrice() {
@@ -45,8 +44,7 @@ function sortPrice() {
   } else if (ascPrice.value === false) {
     allProduct.value = filteredName.value.slice().sort((a, b) => b.price - a.price);
   }
-  console.log(filteredName.value)
-  console.log(ascPrice.value)
+  
 }
 
 let ascRating = ref(true)
@@ -57,8 +55,7 @@ function sortRating() {
   } else if (ascRating.value === false) {
     allProduct.value = filteredName.value.slice().sort((a, b) => b.rating.rate - a.rating.rate);
   }
-  console.log(allProduct.value)
-  console.log(ascRating.value)
+
 }
 
 const currentPage = ref(1);
@@ -102,7 +99,6 @@ function addCart(product) {
 
 </script>
 <template>
-  <button class="border bg-slate-300">test</button>
   <div class="flex w-10/12 mx-auto">
     <div
       class="relative flex h-[calc(100vh-2rem)] w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
@@ -144,7 +140,7 @@ function addCart(product) {
                   <div class="">
                     <input type="radio" v-model="selected" :value=category @change="getProductCategory(selected)"
                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
-                    <label class="capitalize py-1 ms-2 mx-auto my-1 text-gray-900 dark:text-gray-300">{{
+                    <label class="capitalize py-1 ms-2 mx-auto my-1 text-gray-900 hover:text-teal-400">{{
                   category }}
                     </label>
                   </div>
@@ -182,7 +178,7 @@ function addCart(product) {
               <nav class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
                 <div role="button" @click="sortName()"
                   class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                  <span class="mr-2">Name</span>
+                  <span class="mr-2 hover:text-teal-400">Name</span>
                   <svg :class="{ 'rotate-180': !ascName }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
                     class="w-4 h-4 transition-transform">
@@ -191,7 +187,7 @@ function addCart(product) {
                 </div>
                 <div role="button" @click="sortPrice()"
                   class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                  <span class="mr-2">Price</span>
+                  <span class="mr-2 hover:text-teal-400">Price</span>
                   <svg :class="{ 'rotate-180': !ascPrice }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
                     class="w-4 h-4 transition-transform">
@@ -200,7 +196,7 @@ function addCart(product) {
                 </div>
                 <div role="button" @click="sortRating()"
                   class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                  <span class="mr-2">Rating</span>
+                  <span class="mr-2 hover:text-teal-400">Rating</span>
                   <svg :class="{ 'rotate-180': !ascRating }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
                     class="w-4 h-4 transition-transform">
@@ -211,7 +207,7 @@ function addCart(product) {
             </div>
           </div>
         </div>
-        <div role="button"
+        <router-link to="/cart"
           class="flex items-center w-full leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
           <div class="grid mr-4 place-items-center">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -230,10 +226,10 @@ function addCart(product) {
           <div class="grid ml-auto place-items-center justify-self-end">
             <div
               class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-full select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
-              <span class="">{{ store.cartData.length }}</span>
+              <span class="">{{ store.totalCart }}</span>
             </div>
           </div>
-        </div>
+          </router-link >
         <div role="button"
           class="flex mt-2 items-center w-full leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
           <div class="grid mr-4 place-items-center">
@@ -289,10 +285,8 @@ function addCart(product) {
           </div>
         </li>
       </ul>
-    </div>
-  </div>
-  <nav class="w-3/4 mt-5 mx-auto">
-    <ul class="flex justify-between">
+      <nav class="w-3/4 mt-5 mx-auto">
+    <ul class="flex justify-between text-lg font-bold">
       <li>
         <button @click="previousPage()"
           class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none focus:ring-0 active:bg-neutral-100 active:text-primary-700">Previous</button>
@@ -319,6 +313,9 @@ function addCart(product) {
       </li>
     </ul>
   </nav>
+    </div>
+  </div>
+  
 
 </template>
 <style></style>
