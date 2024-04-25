@@ -44,7 +44,7 @@ function sortPrice() {
   } else if (ascPrice.value === false) {
     allProduct.value = filteredName.value.slice().sort((a, b) => b.price - a.price);
   }
-  
+
 }
 
 let ascRating = ref(true)
@@ -96,23 +96,46 @@ function addCart(product) {
     ++store.cartData[index].count
   }
 }
-
+const sortNav = ref(false)
+function sort() {
+  sortNav.value = !sortNav.value
+}
+const listCategory = ref(false)
+function category() {
+  listCategory.value = !listCategory.value
+}
+const sideOpen = ref(false)
+function sidebar() {
+  sideOpen.value = !sideOpen.value
+}
 </script>
 <template>
   <div class="flex w-10/12 mx-auto">
-    <div
-      class="relative flex h-[calc(100vh-2rem)] w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
+    <button class="flex pt-6" @click="sidebar()">
+      <svg class=" transition-all duration-1000" :class="{ 'rotate-180': sideOpen }" xmlns="http://www.w3.org/2000/svg"
+        width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M8.46448 7.75739L7.05026 9.1716L9.87869 12L7.05029 14.8284L8.46451 16.2426L12.7071 12L8.46448 7.75739Z"
+          fill="#000000" />
+        <path d="M11.2929 9.1716L12.7071 7.75739L16.9498 12L12.7071 16.2426L11.2929 14.8284L14.1213 12L11.2929 9.1716Z"
+          fill="#000000" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M23 5C23 2.79086 21.2091 1 19 1H5C2.79086 1 1 2.79086 1 5V19C1 21.2091 2.79086 23 5 23H19C21.2091 23 23 21.2091 23 19V5ZM19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
+          fill="#000000" />
+      </svg>
+    </button>
+    <div v-if="sideOpen"
+      class="transition-all duration-700 relative flex h-[calc(100vh-2rem)] w-fit max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-2 text-gray-700">
       <div class="p-4 mb-2">
         <h5 class="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
           Sidebar
         </h5>
       </div>
-      <nav class="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-        <div class="relative block w-full">
+      <nav class="flex min-w-[200px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+        <div class="relative block w-fit">
           <div role="button"
-            class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none bg-blue-gray-50/50 text-start text-blue-gray-700 hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-            <button type="button"
-              class="flex items-center justify-between w-full font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900">
+            class="flex items-center w-fit p-0 leading-tight transition-all rounded-lg outline-none bg-blue-gray-50/50 text-start text-blue-gray-700 hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+            <button @click="category()"
+              class="flex items-center justify-between w-fit font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-900 hover:text-blue-gray-900">
               <div class="grid mr-4 place-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
                   class="w-6 h-6">
@@ -125,23 +148,25 @@ function addCart(product) {
                 Category
               </p>
               <span class="ml-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                  stroke="currentColor" aria-hidden="true" class="w-4 h-4 mx-auto transition-transform rotate-180">
+                <svg :class="{ 'rotate-180': !listCategory }" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
+                  class="w-4 h-4 mx-auto transition-transform">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
                 </svg>
               </span>
             </button>
           </div>
           <div class="overflow-hidden">
-            <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
-              <nav class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
+            <div class="block w-fit py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
+              <nav v-if="listCategory"
+                class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
                 <div v-for="category in categories"
-                  class="flex items-center w-full p-1 pl-5 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                  class="flex items-center w-fit p-1 pl-5 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                   <div class="">
                     <input type="radio" v-model="selected" :value=category @change="getProductCategory(selected)"
                       class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                     <label class="capitalize py-1 ms-2 mx-auto my-1 text-gray-900 hover:text-teal-400">{{
-                  category }}
+      category }}
                     </label>
                   </div>
                 </div>
@@ -149,11 +174,11 @@ function addCart(product) {
             </div>
           </div>
         </div>
-        <div class="relative block w-full">
+        <div class="relative block w-fit">
           <div role="button"
-            class="flex items-center w-full p-0 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-            <button type="button"
-              class="flex items-center justify-between w-full font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-700 hover:text-blue-gray-900">
+            class="flex items-center w-fit p-0 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+            <button @click="sort()"
+              class="flex items-center justify-between w-fit font-sans text-xl antialiased font-semibold leading-snug text-left transition-colors border-b-0 select-none border-b-blue-gray-100 text-blue-gray-700 hover:text-blue-gray-900">
               <div class="grid mr-4 place-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
                   class="w-6 h-6">
@@ -162,22 +187,24 @@ function addCart(product) {
                     clip-rule="evenodd"></path>
                 </svg>
               </div>
-              <p class="block mr-auto font-sans text-base antialiased font-normal leading-relaxed text-blue-gray-900">
+              <p class="block mr-auto font-sans font-bold text-xl antialiased leading-relaxed text-blue-gray-900">
                 Sort By
               </p>
               <span class="ml-4">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                  stroke="currentColor" aria-hidden="true" class="w-4 h-4 mx-auto transition-transform">
+                <svg :class="{ 'rotate-180': !sortNav }" xmlns="http://www.w3.org/2000/svg" fill="none"
+                  viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
+                  class="w-4 h-4 mx-auto transition-transform">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
                 </svg>
               </span>
             </button>
           </div>
           <div class="overflow-hidden">
-            <div class="block w-full py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
-              <nav class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
+            <div class="block w-fit py-1 font-sans text-sm antialiased font-light leading-normal text-gray-700">
+              <nav v-if="sortNav"
+                class="flex min-w-[240px] flex-col gap-1 p-0 font-sans text-base font-normal text-blue-gray-700">
                 <div role="button" @click="sortName()"
-                  class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                  class="flex items-center w-fit p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                   <span class="mr-2 hover:text-teal-400">Name</span>
                   <svg :class="{ 'rotate-180': !ascName }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
@@ -186,7 +213,7 @@ function addCart(product) {
                   </svg>
                 </div>
                 <div role="button" @click="sortPrice()"
-                  class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                  class="flex items-center w-fit p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                   <span class="mr-2 hover:text-teal-400">Price</span>
                   <svg :class="{ 'rotate-180': !ascPrice }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
@@ -195,7 +222,7 @@ function addCart(product) {
                   </svg>
                 </div>
                 <div role="button" @click="sortRating()"
-                  class="flex items-center w-full p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                  class="flex items-center w-fit p-1 ml-9 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                   <span class="mr-2 hover:text-teal-400">Rating</span>
                   <svg :class="{ 'rotate-180': !ascRating }" xmlns="http://www.w3.org/2000/svg" fill="none"
                     viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
@@ -208,7 +235,7 @@ function addCart(product) {
           </div>
         </div>
         <router-link to="/cart"
-          class="flex items-center w-full leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+          class="font-bold text-xl flex items-center w-fit leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
           <div class="grid mr-4 place-items-center">
             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
               version="1.1" id="Capa_1" viewBox="0 0 133.865 133.865" xml:space="preserve">
@@ -225,13 +252,13 @@ function addCart(product) {
           Cart
           <div class="grid ml-auto place-items-center justify-self-end">
             <div
-              class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-full select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
+              class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-fit select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
               <span class="">{{ store.totalCart }}</span>
             </div>
           </div>
-          </router-link >
+        </router-link>
         <div role="button"
-          class="flex mt-2 items-center w-full leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+          class="font-bold text-xl flex mt-2 items-center w-fit leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
           <div class="grid mr-4 place-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
               class="w-6 h-6">
@@ -243,12 +270,11 @@ function addCart(product) {
           Log Out
         </div>
       </nav>
-
     </div>
     <div class="w-max">
       <form class="flex w-1/3 items-center mx-auto m-5" @submit.prevent="newSearch">
         <input v-model="cari" type="text" placeholder="Cari Sesuatu"
-          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-fit p-2.5" />
         <button type="submit"
           class="p-2.5 ms-2 font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
           <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -257,65 +283,136 @@ function addCart(product) {
           </svg>
         </button>
       </form>
-      <ul class="grid grid-cols-3 gap-4 container mx-auto">
+      <!-- <ul class="grid grid-cols-3 gap-4 container mx-auto">
         <li v-for="product in paginatedData" :key="product.id"
-          class="border-gray-400 border-4 rounded-lg p-5 hover:border-yellow-700">
+          class=" p-3 border-transparent border rounded-xl hover:border-cyan-300">
           <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
             <div class="h-64 overflow-hidden content-center">
               <img class="mx-auto w-48" :src=product.image />
             </div>
-            <h5 class="text-xl font-semibold text-wrap text-gray-900">{{ product.title }}
+            <h5 class="h-12 text-md font-semibold text-wrap text-gray-900 overflow-hidden text-ellipsis">
+              {{ product.title }}
             </h5>
           </RouterLink>
-          <div class="flex items-center">
-            <svg class="w-5 h-5 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 22 20">
-              <path
-                d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-            </svg>
-            <p class="ms-2  font-bold text-gray-900">{{ product.rating.rate }}</p>
-            <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-full dark:bg-gray-400"></span>
-            <p class=" font-medium text-gray-900 underline hover:no-underline">{{ product.rating.count }} reviews</p>
+          <div>
+            <div class="flex items-center">
+              <svg class="w-5 h-5 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor" viewBox="0 0 22 20">
+                <path
+                  d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+
+              <p class="ms-2 font-bold text-gray-900">{{ product.rating.rate }}</p>
+              <span class="w-1 h-1 mx-1.5 bg-gray-500 rounded-fit dark:bg-gray-400"></span>
+              <p class=" font-medium text-gray-900 underline hover:no-underline">{{ product.rating.count }} reviews</p>
+            </div>
+            <span class="text-2xl font-bold text-gray-900 ">$ {{ product.price }}</span>
           </div>
-          <div class="flex justify-between place-self-end items-end">
-            <span class="text-3xl font-bold text-gray-900 ">$ {{ product.price }}</span>
-            <button @click="addCart(product)"
-              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg px-5 py-2.5 text-center">Add
-              to cart</button>
+          <div class="flex justify-end">
+            <button @click="addCart(product)" class="text-white bg-blue-700 rounded-lg p-2 px-5 -mt-10 text-center">Add
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path
+                  d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z" />
+              </svg>
+            </button>
           </div>
         </li>
-      </ul>
+      </ul> -->
+
+
+      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="px-16 py-3">
+                <span class="sr-only">Image</span>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Product
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Rating
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Price
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in paginatedData" :key="product.id"
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
+              <td class="p-2 w-12 h-14 overflow-hidden ">
+                <img :src="product.image" class="h-14 w-14 mx-auto">
+              </td>
+              <td class="px-3 py-2 w-60 text-md  text-wrap font-semibold text-gray-900 overflow-hidden">
+                {{ product.title }}
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <svg class="w-5 h-5 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="currentColor" viewBox="0 0 22 20">
+                    <path
+                      d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                  </svg>
+
+                  <p class="ms-2 font-bold text-gray-900">{{ product.rating.rate }}</p>
+                </div>
+              </td>
+              <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                ${{ product.price }}
+              </td>
+              <td class="px-6 py-4">
+                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">add to Cart</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <nav class="w-3/4 mt-5 mx-auto">
-    <ul class="flex justify-between text-lg font-bold">
-      <li>
-        <button @click="previousPage()"
-          class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none focus:ring-0 active:bg-neutral-100 active:text-primary-700">Previous</button>
-      </li>
-      <div class="flex">
-        <!-- <li>
+        <ul class="flex justify-between text-lg font-bold">
+          <li>
+            <button @click="previousPage()"
+              class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none focus:ring-0 active:bg-neutral-100 active:text-primary-700">Previous</button>
+          </li>
+          <div class="flex">
+            <!-- <li>
                     <button
                         class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">1</button>
                 </li> -->
-        <li>
-          <button
-            class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
-                  currentPage }}</button>
-        </li>
-        <!-- <li>
+            <li>
+              <button
+                class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
+      currentPage }}</button>
+            </li>
+            <!-- <li>
                     <button @click=""
                         class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
                         totalPages }}</button>
                 </li> -->
-      </div>
-      <li>
-        <button @click="nextPage()"
-          class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">Next</button>
-      </li>
-    </ul>
-  </nav>
+          </div>
+          <li>
+            <button @click="nextPage()"
+              class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">Next</button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
-  
+
 
 </template>
-<style></style>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease-out;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

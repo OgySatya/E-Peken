@@ -17,18 +17,17 @@ const totalPrice = computed(() => {
    return sum.toFixed(2)
 });
 const diskon = computed(() => {
-   if(typeof voucher.value === 'number'){
-      return (totalPrice.value * voucher.value/100).toFixed(2)}
-      else{
-         return Number(alamat.value)
-      }
-   
-})||0;
+   if (typeof voucher.value === 'number') {
+      return (totalPrice.value * voucher.value / 100).toFixed(2)
+   }
+   else {
+      return Number(alamat.value)
+   }
+
+}) || 0;
 const totalPay = computed(() => {
    return Number(alamat.value) + Number(totalPrice.value) - Number(diskon.value)
-})||0;
-
-
+}) || 0;
 </script>
 <template>
    <section
@@ -114,8 +113,6 @@ const totalPay = computed(() => {
                      </div>
                   </div>
                </div>
-
-
                <div class="flex items-center mt-8">
                   <button
                      class="flex justify-start items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700">
@@ -134,44 +131,46 @@ const totalPay = computed(() => {
                <h2 class="font-manrope font-bold text-3xl leading-10 text-black pb-8 border-b border-gray-300">
                   Order Summary</h2>
                <div class="mt-8">
-                  
+
                   <div class="flex items-center justify-between pb-6">
-                     <p class="font-normal text-lg leading-8 text-black">{{ store.totalCart  }} Items</p>
+                     <p class="font-normal text-lg leading-8 text-black">{{ store.totalCart }} Items</p>
                      <p class="font-medium text-lg leading-8 text-black">${{ totalPrice }}</p>
                   </div>
-                  <div >
-               
-                  <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
-                  <label  class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Alamat</label>
-                  <select v-model="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                     <option :value= 10>Bali</option>
-                     <option :value= 20>Jawa</option>
-                     <option :value= 30>Sumatra</option>
-                     <option :value= 40>Kalimantan</option>
-                     <option :value= 50>Sulawesi</option>
-                     <option :value= 60>Papua</option>
-                  </select>
-                  </div>
-                  <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
-                  <label  class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Use Voucher</label>
-                  <select type="number" v-model="voucher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                     <option value ='false'>Gratis Ongkos Kirim</option>
-                     <option :value = 10>Diskon 10 %</option>
-                     <option :value = 15>Diskon 15 %</option>
-                     <option :value = 20>Diskon 20 %</option>
-                  </select>
-                  </div>
+                  <div>
+
+                     <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
+                        <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Alamat</label>
+                        <select v-model="alamat"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                           <option :value=10>Bali</option>
+                           <option :value=20>Jawa</option>
+                           <option :value=30>Sumatra</option>
+                           <option :value=40>Kalimantan</option>
+                           <option :value=50>Sulawesi</option>
+                           <option :value=60>Papua</option>
+                        </select>
+                     </div>
+                     <div class="max-w-sm mx-auto grid items-center border-b border-gray-200 my-2">
+                        <label class="block mb-2 text-lg font-medium text-gray-900 dark:text-white">Use Voucher</label>
+                        <select type="number" v-model="voucher"
+                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                           <option value='false'>Gratis Ongkos Kirim</option>
+                           <option :value=10>Diskon 10 %</option>
+                           <option :value=15>Diskon 15 %</option>
+                           <option :value=20>Diskon 20 %</option>
+                        </select>
+                     </div>
                      <div v-if="alamat" class="ml-3 flex items-center justify-between py-2">
                         <p class="font-medium text-xl leading-8 text-black">Ongkos Kirim</p>
                         <p class="font-semibold text-xl leading-8 text-red-400"> +${{ alamat }}</p>
                      </div>
                      <div v-if="voucher" class="ml-3 flex items-center justify-between py-2">
                         <p class="font-medium text-xl leading-8 text-black">Diskon</p>
-                        <p class="font-semibold text-xl leading-8 text-green-600">-${{diskon}}</p>
+                        <p class="font-semibold text-xl leading-8 text-green-600">-${{ diskon }}</p>
                      </div>
                      <div class="flex items-center justify-between py-8">
                         <p class="font-semibold text-2xl leading-8 text-amber-700">Cost : </p>
-                        <p class="font-bold text-2xl leading-8 text-indigo-600">$ {{ totalPay||0 }}</p>
+                        <p class="font-bold text-2xl leading-8 text-indigo-600">$ {{ totalPay || 0 }}</p>
                      </div>
                      <button
                         class="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">Checkout</button>
