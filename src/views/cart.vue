@@ -26,7 +26,7 @@ const diskon = computed(() => {
 
 }) || 0;
 const totalPay = computed(() => {
-   return Number(alamat.value) + Number(totalPrice.value) - Number(diskon.value)
+   return (Number(alamat.value) + Number(totalPrice.value) - Number(diskon.value)).toFixed(2)
 }) || 0;
 </script>
 <template>

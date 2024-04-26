@@ -5,7 +5,7 @@ const store = useCartStore()
 </script>
 
 <template>
-  <div class="flex flex-col items-center justify-center mt-32" x-cloak x-data="appData()" x-init="appInit()">
+  <div class="flex flex-col items-center justify-center mt-32">
     <div class="flex flex-col">
       <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5
             bg-blue-500" :style="`width: ${percent}%`"></div>

@@ -114,7 +114,7 @@ const listCategory = ref(false)
 function category() {
   listCategory.value = !listCategory.value
 }
-const sideOpen = ref(false)
+const sideOpen = ref(true)
 function sidebar() {
   sideOpen.value = !sideOpen.value
 }
@@ -158,7 +158,7 @@ function sidebar() {
                 Category
               </p>
               <span class="ml-4">
-                <svg :class="{ 'rotate-180': !listCategory }" xmlns="http://www.w3.org/2000/svg" fill="none"
+                <svg :class="{ 'rotate-180': listCategory }" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
                   class="w-4 h-4 mx-auto transition-transform">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
@@ -201,7 +201,7 @@ function sidebar() {
                 Sort By
               </p>
               <span class="ml-4">
-                <svg :class="{ 'rotate-180': !sortNav }" xmlns="http://www.w3.org/2000/svg" fill="none"
+                <svg :class="{ 'rotate-180': sortNav }" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" aria-hidden="true"
                   class="w-4 h-4 mx-auto transition-transform">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"></path>
@@ -262,8 +262,8 @@ function sidebar() {
           Cart
           <div class="grid ml-auto place-items-center justify-self-end">
             <div
-              class="relative grid items-center px-2 py-1 font-sans text-xs font-bold uppercase rounded-fit select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
-              <span class="">{{ store.totalCart }}</span>
+              class="relative grid items-center px-2 py-1 font-sans font-bold uppercase rounded-fit select-none whitespace-nowrap bg-blue-gray-500/20 text-blue-gray-900">
+              <span class="ml-5">{{ store.totalCart }}</span>
             </div>
           </div>
         </router-link>
@@ -295,12 +295,12 @@ function sidebar() {
       </form>
       <div class="flex my-4">
         <button class="mr-4" @click="grid()">
-                  <svg class="w-10 h-10 text-gray-800 dark:text-white" :class="{ 'text-emerald-500': view }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <svg class="w-10 h-10 text-gray-800 rounded" :class="{ 'fill-emerald-500 border border-emerald-500': view}" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z"/>
         </svg>
         </button>
         <button @click="list()">
-          <svg class="w-11 h-11 text-gray-800" :class="{ 'text-emerald-500': !view }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <svg class="w-10 h-10 text-gray-800 rounded" :class="{'fill-emerald-500 border border-emerald-500': !view }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
         </svg>
           </button>
