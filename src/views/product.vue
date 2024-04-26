@@ -59,13 +59,14 @@ function sortRating() {
 }
 
 const currentPage = ref(1);
+const page = ref(6)
 const totalPages = computed(() => {
-  return Math.ceil(filteredName.value.length / 6);
+  return Math.ceil(filteredName.value.length / page.value);
 });
 
 const paginatedData = computed(() => {
-  const startIndex = (currentPage.value - 1) * 6;
-  const endIndex = startIndex + 6;
+  const startIndex = (currentPage.value - 1) * page.value;
+  const endIndex = startIndex + page.value;
   return filteredName.value.slice(startIndex, endIndex);
 });
 
@@ -95,6 +96,15 @@ function addCart(product) {
     const index = store.cartData.findIndex(item => item.title === product.title)
     ++store.cartData[index].count
   }
+}
+const view = ref(true)
+function grid() {
+  view.value = true
+  page.value = 6;
+}
+function list() {
+  view.value = false
+  page.value = 10;
 }
 const sortNav = ref(false)
 function sort() {
@@ -283,7 +293,20 @@ function sidebar() {
           </svg>
         </button>
       </form>
-      <!-- <ul class="grid grid-cols-3 gap-4 container mx-auto">
+      <div class="flex my-4">
+        <button class="mr-4" @click="grid()">
+                  <svg class="w-10 h-10 text-gray-800 dark:text-white" :class="{ 'text-emerald-500': view }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z"/>
+        </svg>
+        </button>
+        <button @click="list()">
+          <svg class="w-11 h-11 text-gray-800" :class="{ 'text-emerald-500': !view }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+        </svg>
+          </button>
+      </div>
+      <section>
+      <ul v-if="view" class="grid grid-cols-3 gap-4 container mx-auto">
         <li v-for="product in paginatedData" :key="product.id"
           class=" p-3 border-transparent border rounded-xl hover:border-cyan-300">
           <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
@@ -317,24 +340,45 @@ function sidebar() {
             </button>
           </div>
         </li>
-      </ul> -->
+      </ul>
 
-
-      <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      
+      <div v-else class="relative overflow-x-auto sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+          <thead class=" text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="px-16 py-3">
                 <span class="sr-only">Image</span>
               </th>
               <th scope="col" class="px-6 py-3">
-                Product
+                <div class="flex items-center">
+                        Product Name
+                    <button @click="sortName()" class="ml-3">
+                      <svg class="w-5 h-5 text-gray-700 dark:text-white transition-all duration-500" :class="{ 'rotate-180': !ascName }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.119 8h9.762a1 1 0 0 1 .772 1.636l-4.881 5.927a1 1 0 0 1-1.544 0l-4.88-5.927A1 1 0 0 1 7.118 8Z"/>
+                    </svg>
+                    </button>
+                    </div>
               </th>
               <th scope="col" class="px-6 py-3">
-                Rating
+                <div class="flex items-center">
+                        Rating
+                    <button @click="sortRating()" class="ml-3">
+                      <svg class="w-5 h-5 text-gray-700 dark:text-white transition-all duration-500" :class="{ 'rotate-180': !ascRating }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.119 8h9.762a1 1 0 0 1 .772 1.636l-4.881 5.927a1 1 0 0 1-1.544 0l-4.88-5.927A1 1 0 0 1 7.118 8Z"/>
+                    </svg>
+                    </button>
+                    </div>
               </th>
               <th scope="col" class="px-6 py-3">
-                Price
+                <div class="flex items-center">
+                        Price
+                    <button @click="sortPrice()" class="ml-3">
+                      <svg class="w-5 h-5 text-gray-700 dark:text-white transition-all duration-500" :class="{ 'rotate-180': !ascPrice }" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.119 8h9.762a1 1 0 0 1 .772 1.636l-4.881 5.927a1 1 0 0 1-1.544 0l-4.88-5.927A1 1 0 0 1 7.118 8Z"/>
+                    </svg>
+                    </button>
+                    </div>
               </th>
               <th scope="col" class="px-6 py-3">
                 Action
@@ -343,12 +387,16 @@ function sidebar() {
           </thead>
           <tbody>
             <tr v-for="product in paginatedData" :key="product.id"
-              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600">
-              <td class="p-2 w-12 h-14 overflow-hidden ">
-                <img :src="product.image" class="h-14 w-14 mx-auto">
+              class="border-b hover:bg-gray-100 ">
+              <td class="p-2 w-24 h-16 overflow-hidden ">
+                <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
+                <img :src="product.image" class="h-14 mx-auto">
+              </RouterLink>
               </td>
-              <td class="px-3 py-2 w-60 text-md  text-wrap font-semibold text-gray-900 overflow-hidden">
+              <td class="px-4 py-2 w-96 ">
+                <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }" class="text-wrap font-semibold text-gray-900 overflow-hidden">
                 {{ product.title }}
+              </RouterLink>
               </td>
               <td class="px-6 py-4">
                 <div class="flex items-center">
@@ -365,13 +413,18 @@ function sidebar() {
                 ${{ product.price }}
               </td>
               <td class="px-6 py-4">
-                <a href="#" class="font-medium text-red-600 dark:text-red-500 hover:underline">add to Cart</a>
+                <button @click="addCart(product)" class="text-gray-900 text-xs bg-gray-100 rounded-lg p-1 px-3 -mt-10 text-center">Add
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path
+                  d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z" />
+              </svg>
+            </button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
+    </section>
       <nav class="w-3/4 mt-5 mx-auto">
         <ul class="flex justify-between text-lg font-bold">
           <li>
