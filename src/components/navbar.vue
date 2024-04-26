@@ -15,7 +15,7 @@ const store = useCartStore()
         <h1 class="text-4xl font-extrabold grad mt-3" style="font-family: Lucida Handwriting ">
           E-PEKEN
         </h1>
-        <nav class="items-center hidden space-x-8 lg:flex">
+        <nav class="items-center space-x-8 lg:flex">
           <router-link to="/" class="flex text-gray-600 hover:text-blue-500
                     cursor-pointer transition-colors duration-300">
             Home
