@@ -31,16 +31,15 @@ function addData() {
 <template>
     <section class="text-gray-700 body-font">
         <div class="container p-5 mx-auto">
-            <div class="lg:w-4/5 mx-auto flex flex-wrap">
-                <img class="lg:w-1/2 w-fit object-cover object-center rounded border border-gray-200"
-                    :src="detailProduct.image">
+            <div class="lg:w-4/5 mx-auto flex flex-wrap border-2 rounded-2xl p-4">
+                <img class="lg:w-1/2 w-fit object-cover object-center mx-auto" :src="detailProduct.image">
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                     <h2 class="text-sm title-font text-gray-500 tracking-widest">PRODUCT NAME</h2>
                     <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{ detailProduct.title }}</h1>
                     <h3
                         class="text-white text-xl title-font font-medium mb-1 bg-stone-700 capitalize w-fit px-2 rounded">
                         {{
-                        detailProduct.category }}
+                    detailProduct.category }}
                     </h3>
                     <p class="leading-relaxed my-5">{{ detailProduct.description }}</p>
                     <div class="flex items-center pb-5 border-b-2 border-gray-200 mb-5">
@@ -80,15 +79,16 @@ function addData() {
                     </div>
                     <div class="mt-10">
                         <button
-                     class="flex justify-start items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700">
-                     <svg class="transition-all duration-500 group-hover:translate-x-2 rotate-180"
-                        xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                        <path
-                           d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
-                           stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" />
-                     </svg>
-                     <RouterLink to="/product">Back to Shopping</RouterLink>
-                  </button>
+                            class="flex justify-start items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700">
+                            <svg class="transition-all duration-500 group-hover:translate-x-2 rotate-180"
+                                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22"
+                                fill="none">
+                                <path
+                                    d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
+                                    stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" />
+                            </svg>
+                            <RouterLink to="/product">Back to Shopping</RouterLink>
+                        </button>
                     </div>
                 </div>
             </div>
