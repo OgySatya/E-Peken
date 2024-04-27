@@ -17,6 +17,7 @@ function login() {
       store.fullName = find.firstName + ' ' + find.lastName
       warning.value = false
       router.push({ path: '/product' })
+      localStorage.setItem("name", store.fullName);
       localStorage.setItem("auth", true);
     } else {
       warning.value = true;

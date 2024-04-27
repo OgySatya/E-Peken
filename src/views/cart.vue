@@ -56,7 +56,7 @@ const totalPay = computed(() => {
                </div>
                <div v-for="(list, index ) in store.cartData"
                   class="flex flex-col min-[500px]:flex-row min-[500px]:items-center gap-5 py-6  border-b border-gray-200 group">
-                  <div class="w-full md:max-w-[126px]">
+                  <div class="w-1/2 md:max-w-[126px] mx-auto">
                      <img :src="list.image" class="mx-auto">
                   </div>
                   <div class="grid grid-cols-1 md:grid-cols-4 w-full">
@@ -109,7 +109,7 @@ const totalPay = computed(() => {
                      </div>
                      <div class="flex items-center max-[500px]:justify-center md:justify-end max-md:mt-6 h-full">
                         <button @click="deleteItem(index)" type="button"
-                           class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
+                           class="font-medium text-red-600 hover:text-indigo-500">Remove</button>
                      </div>
                   </div>
                </div>

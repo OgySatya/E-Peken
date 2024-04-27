@@ -7,26 +7,25 @@ const store = useCartStore()
 <template>
   <div class="flex flex-col items-center justify-center mt-32">
     <div class="flex flex-col">
-      <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5
-            bg-blue-500" :style="`width: ${percent}%`"></div>
+      <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5" :style="`width: ${percent}%`"></div>
       <nav class="flex justify-around py-2 bg-white/80
             backdrop-blur-md shadow-md w-full
             fixed top-0 left-0 right-0 z-10">
-        <h1 class="text-4xl font-extrabold grad mt-3" style="font-family: Lucida Handwriting ">
+        <h1 class="text-4xl font-extrabold grad mt-3 hidden lg:block " style=" font-family: Lucida Handwriting ">
           E-PEKEN
         </h1>
-        <nav class="items-center space-x-8 lg:flex">
-          <router-link to="/" class="flex text-gray-600 hover:text-blue-500
-                    cursor-pointer transition-colors duration-300">
+        <nav class="  flex my-auto space-x-8 ">
+          <router-link activeClass="text-indigo-700" to="/" class="ptext-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
+             cursor-pointer transition-colors duration-300">
             Home
           </router-link>
-          <router-link to="/product" class="flex text-gray-600 hover:text-blue-500
+          <router-link activeClass="text-indigo-700" to="/product" class="text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
                     cursor-pointer transition-colors duration-300">
             Product
           </router-link>
-          <router-link to="/about" class="flex text-gray-600 hover:text-blue-500
+          <router-link activeClass="text-indigo-700" to="/about" class=" text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
                     cursor-pointer transition-colors duration-300">
-            about
+            About
           </router-link>
         </nav>
         <div class="flex items-center space-x-5">
@@ -34,7 +33,7 @@ const store = useCartStore()
             <div class="relative py-2">
               <div class=" top-4 absolute left-3">
                 <p class="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-2 text-xs text-white">{{
-              store.totalCart }}</p>
+        store.totalCart }}</p>
               </div>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 class="file: mt-4 h-6 w-6 stroke-gray-700 stroke-2 ">
@@ -43,7 +42,7 @@ const store = useCartStore()
               </svg>
             </div>
           </router-link>
-          <router-link to="login" class="flex text-gray-600 
+          <router-link to="/login" class="flex text-gray-600 
                     cursor-pointer transition-colors duration-300
                     font-semibold">
             <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"

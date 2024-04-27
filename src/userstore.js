@@ -3,7 +3,7 @@ import{ ref, reactive, computed } from 'vue'
 export const useUserStore = defineStore('auth', () => {
   const newUser = ref({})
   
-  const fullName = ref('')
+  const fullName = ref(localStorage.getItem("name"))
   function addUser () {
     let getData = localStorage.getItem("userData")
     let allUser = getData ? JSON.parse(getData) : [];
