@@ -304,7 +304,7 @@ function logout() {
       </form>
       <div class="w-full">
         <div class="flex justify-between">
-          <div>
+          <div class="hidden lg:block">
             <button class="mr-2" @click="sidebar()">
               <svg class=" transition-all duration-1000" :class="{ 'rotate-180': sideOpen }"
                 xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none">
@@ -320,7 +320,7 @@ function logout() {
               </svg>
             </button>
           </div>
-          <div>
+          <div class="hidden lg:block">
             <button class="mr-4" @click="grid()">
               <svg class="w-10 h-10 text-gray-800 rounded" :class="{ 'fill-gray-300 ring': view }" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -330,7 +330,7 @@ function logout() {
             </button>
             <button @click="list()">
               <svg class="w-10 h-10 text-gray-800 rounded" :class="{ 'fill-gray-300 ring': !view }" aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg" width="24" height="36" fill="none" viewBox="0 0 24 24">
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
               </svg>
