@@ -15,13 +15,17 @@ const store = useCartStore()
           E-PEKEN
         </h1>
         <nav class="  flex my-auto space-x-8 ">
-          <router-link activeClass="text-indigo-700" to="/" class="ptext-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
+          <router-link activeClass="text-indigo-700" to="/" class="text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
              cursor-pointer transition-colors duration-300">
             Home
           </router-link>
           <router-link activeClass="text-indigo-700" to="/product" class="text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
                     cursor-pointer transition-colors duration-300">
             Product
+          </router-link>
+          <router-link activeClass="text-indigo-700" to="/productv2" class="text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
+                    cursor-pointer transition-colors duration-300">
+            ProductV2
           </router-link>
           <router-link activeClass="text-indigo-700" to="/about" class=" text-gray-600 font-semibold text-xl rounded-xl hover:text-blue-500
                     cursor-pointer transition-colors duration-300">
