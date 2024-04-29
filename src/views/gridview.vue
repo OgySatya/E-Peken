@@ -22,9 +22,9 @@ function addCart(product) {
 
 <template>
     <section>
-        <ul class="grid grid-cols-1 gap-4 w-fit mx-auto">
+        <ul class="grid grid-cols-3 gap-4 w-fit mx-auto">
             <li v-for="product in data" :key="product.id"
-                class="relative flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-200 shadow-md">
+                class="relative flex w-full max-w-xs flex-col overflow-hidden  bg-white rounded-lg border border-gray-200 shadow-md">
                 <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }"
                     class="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
                     <img class="object-cover bg-red-400 mx-auto" :src="product.image" />

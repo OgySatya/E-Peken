@@ -136,52 +136,53 @@ function logout() {
 </script>
 
 <template>
-    <sidebarr />
-    <div>
-        <form class="flex justify-center mx-auto m-5" @submit.prevent="newSearch">
-            <input v-model="cari" type="text" placeholder="Cari Sesuatu"
-                class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5" />
-            <button type="submit"
-                class="p-2.5 ms-2 font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                    viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                </svg>
-            </button>
-        </form>
-        <gridview :data="paginatedData">
-        </gridview>
-        <listview :data="paginatedData">
-        </listview>
-        <nav class="w-3/4 mt-5 mx-auto">
-            <ul class="flex justify-between text-lg font-bold">
-                <li>
-                    <button @click="previousPage()"
-                        class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none focus:ring-0 active:bg-neutral-100 active:text-primary-700">Previous</button>
-                </li>
-                <div class="flex">
-                    <!-- <li>
+    <div class="flex mx-auto w-max">
+        <sidebarr @response="(msg) => getProductCategory(msg)" />
+        <div>
+            <form class="flex justify-center mx-auto mb-5" @submit.prevent="newSearch">
+                <input v-model="cari" type="text" placeholder="Cari Sesuatu"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5" />
+                <button type="submit"
+                    class="p-2.5 ms-2 font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </button>
+            </form>
+            <gridview :data="paginatedData">
+            </gridview>
+            <listview :data="paginatedData">
+            </listview>
+            <nav class="w-3/4 mt-5 mx-auto">
+                <ul class="flex justify-between text-lg font-bold">
+                    <li>
+                        <button @click="previousPage()"
+                            class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none focus:ring-0 active:bg-neutral-100 active:text-primary-700">Previous</button>
+                    </li>
+                    <div class="flex">
+                        <!-- <li>
                     <button
                         class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">1</button>
                 </li> -->
-                    <li>
-                        <button
-                            class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
+                        <li>
+                            <button
+                                class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
             currentPage }}</button>
-                    </li>
-                    <!-- <li>
+                        </li>
+                        <!-- <li>
                     <button @click=""
                         class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">{{
                         totalPages }}</button>
                 </li> -->
-                </div>
-                <li>
-                    <button @click="nextPage()"
-                        class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">Next</button>
-                </li>
-            </ul>
-        </nav>
+                    </div>
+                    <li>
+                        <button @click="nextPage()"
+                            class="relative block rounded bg-transparent px-3 py-1.5 text-surface transition duration-300 hover:bg-neutral-100 focus:bg-neutral-100 focus:text-primary-700 focus:outline-none active:bg-neutral-100 active:text-primary-700">Next</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
-
 </template>
