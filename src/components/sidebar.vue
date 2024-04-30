@@ -7,8 +7,8 @@ import { useRouter } from 'vue-router';
 const user = useUserStore()
 const router = useRouter()
 const store = useCartStore()
+const emit = defineEmits(['add'])
 
-const radio = ref('')
 const open = ref(false)
 const categories = ref([
     "electronics",
@@ -16,7 +16,41 @@ const categories = ref([
     "men's clothing",
     "women's clothing"
 ])
+async function getProductCategory(param) {
+    const response = await fetch(`https://fakestoreapi.com/products/category/${param}`);
+    const data = await response.json();
+    store.allProduct = data;
+}
+let ascName = ref(true)
+function sortName() {
+    ascName.value = !ascName.value
+    if (ascName.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.title.localeCompare(b.title));
+    } else if (ascName.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.title.localeCompare(a.title));
+    }
+    console.log(store.filteredName)
+}
+let ascPrice = ref(true)
+function sortPrice() {
+    ascPrice.value = !ascPrice.value
+    if (ascPrice.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.price - b.price);
+    } else if (ascPrice.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.price - a.price);
+    }
 
+}
+let ascRating = ref(true)
+function sortRating() {
+    ascRating.value = !ascRating.value
+    if (ascRating.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.rating.rate - b.rating.rate);
+    } else if (ascRating.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.rating.rate - a.rating.rate);
+    }
+
+}
 function toggle() {
     open.value = !open.value
 }
@@ -34,14 +68,11 @@ function logout() {
     router.push({ path: '/' });
 
 }
-const emit = defineEmits(['response'])
-
-emit('response', radio.value)
 
 </script>
 <template>
     <div class="flex h-max mx-2">
-        <div class="grid left-0 flex-row-reverse">
+        <div class="left-0 flex-row-reverse hidden md:block">
             <div :class="[open ? 'flex justify-between' : 'grid gap-5']"
                 class=" transition-transform duration-1000 mb-2">
                 <button @click.prevent="toggle()"
@@ -53,7 +84,7 @@ emit('response', radio.value)
                     </svg>
 
                 </button>
-                <button @click.prevent="toggle()"
+                <button @click.prevent="$emit('add', true)"
                     class="w-12 h-max p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
                     <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -63,7 +94,7 @@ emit('response', radio.value)
 
 
                 </button>
-                <button @click.prevent="toggle()"
+                <button @click.prevent="$emit('add', false)"
                     class="w-12 h-max p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
                     <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                         width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -130,8 +161,8 @@ emit('response', radio.value)
                                             <div v-for="category in categories"
                                                 class="flex items-center w-max p-1 pl-5 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                                 <div class="">
-                                                    <input type="radio" v-model="radio" :value=category
-                                                        @change="$emit('someEvent')"
+                                                    <input type="radio" :value=category
+                                                        @change="getProductCategory(category)"
                                                         class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500">
                                                     <label
                                                         class="capitalize py-1 ms-2  my-1 text-gray-900 hover:text-teal-400">{{

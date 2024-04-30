@@ -1,82 +1,35 @@
 <script setup>
 import gridview from './gridview.vue'
 import listview from './listview.vue'
-import sidebarr from '../components/sidebar.vue'
+import sidebar from '../components/sidebar.vue'
 import { ref, computed, onMounted } from 'vue';
 import { useCartStore } from '../cartstore.js'
-import { useUserStore } from '/src/userstore.js'
-import { useRouter } from 'vue-router';
 
-const user = useUserStore()
-const router = useRouter()
 const store = useCartStore()
-const allProduct = ref([])
-const cari = ref('')
-const categories = ref([
-    "electronics",
-    "jewelery",
-    "men's clothing",
-    "women's clothing"
-])
-const selected = ref('')
+
 onMounted(() => {
     getProduct()
-    if (window.innerWidth < 1024) {
-        list()
+    if (window.innerWidth < 640) {
+        gridList(false)
     }
 })
 async function getProduct() {
     const response = await fetch("https://fakestoreapi.com/products");
     const data = await response.json();
-    allProduct.value = data;
-}
-async function getProductCategory(param) {
-    const response = await fetch(`https://fakestoreapi.com/products/category/${param}`);
-    const data = await response.json();
-    allProduct.value = data;
-}
-let ascName = ref(true)
-function sortName() {
-    ascName.value = !ascName.value
-    if (ascName.value === true) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => a.title.localeCompare(b.title));
-    } else if (ascName.value === false) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => b.title.localeCompare(a.title));
-    }
-
-}
-let ascPrice = ref(true)
-function sortPrice() {
-    ascPrice.value = !ascPrice.value
-    if (ascPrice.value === true) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => a.price - b.price);
-    } else if (ascPrice.value === false) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => b.price - a.price);
-    }
-
-}
-
-let ascRating = ref(true)
-function sortRating() {
-    ascRating.value = !ascRating.value
-    if (ascRating.value === true) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => a.rating.rate - b.rating.rate);
-    } else if (ascRating.value === false) {
-        allProduct.value = filteredName.value.slice().sort((a, b) => b.rating.rate - a.rating.rate);
-    }
-
+    store.allProduct = data;
 }
 
 const currentPage = ref(1);
 const page = ref(6)
+
 const totalPages = computed(() => {
-    return Math.ceil(filteredName.value.length / page.value);
+    return Math.ceil(store.filteredName.length / page.value);
 });
 
 const paginatedData = computed(() => {
     const startIndex = (currentPage.value - 1) * page.value;
     const endIndex = startIndex + page.value;
-    return filteredName.value.slice(startIndex, endIndex);
+    return store.filteredName.slice(startIndex, endIndex);
 });
 
 function previousPage() {
@@ -90,57 +43,18 @@ function nextPage() {
         currentPage.value++;
     }
 }
-
-const filteredName = computed(() => {
-    return allProduct.value.filter(name => name.title ?
-        name.title.toLowerCase().includes(cari.value.toLowerCase()) : ''
-    )
-})
-function addCart(product) {
-    if (!store.cartData.some(item => item.title === product.title)) {
-        product.count = 1;
-        store.product.value = product
-        store.addProduct()
-    } else {
-        const index = store.cartData.findIndex(item => item.title === product.title)
-        ++store.cartData[index].count
-    }
+function gridList(lean) {
+    page.value = lean ? 6 : 10;
+    viewType.value = lean
 }
-const view = ref(true)
-function grid() {
-    view.value = true
-    page.value = 6;
-}
-function list() {
-    view.value = false
-    page.value = 10;
-}
-const sortNav = ref(false)
-function sort() {
-    sortNav.value = !sortNav.value
-}
-const listCategory = ref(false)
-function category() {
-    listCategory.value = !listCategory.value
-}
-const sideOpen = ref(true)
-function sidebar() {
-    sideOpen.value = !sideOpen.value
-}
-function logout() {
-    localStorage.setItem("auth", false);
-    user.fullName = ''
-    router.push({ path: '/' });
-
-}
+const viewType = ref(true)
 </script>
-
 <template>
     <div class="flex mx-auto w-max">
-        <sidebarr @response="(msg) => getProductCategory(msg)" />
+        <sidebar @add="(bool) => gridList(bool)" />
         <div>
             <form class="flex justify-center mx-auto mb-5" @submit.prevent="newSearch">
-                <input v-model="cari" type="text" placeholder="Cari Sesuatu"
+                <input v-model="store.cari" type="text" placeholder="Cari Sesuatu"
                     class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5" />
                 <button type="submit"
                     class="p-2.5 ms-2 font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
@@ -151,10 +65,10 @@ function logout() {
                     </svg>
                 </button>
             </form>
-            <gridview :data="paginatedData">
-            </gridview>
-            <listview :data="paginatedData">
-            </listview>
+            <div>
+                <gridview v-if="viewType" :data="paginatedData" />
+                <listview v-else :data="paginatedData" />
+            </div>
             <nav class="w-3/4 mt-5 mx-auto">
                 <ul class="flex justify-between text-lg font-bold">
                     <li>

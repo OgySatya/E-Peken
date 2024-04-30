@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useCartStore } from '../cartstore.js'
 
 const store = useCartStore()
@@ -17,12 +18,40 @@ function addCart(product) {
         ++store.cartData[index].count
     }
 }
+let ascName = ref(true)
+function sortName() {
+    ascName.value = !ascName.value
+    if (ascName.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.title.localeCompare(b.title));
+    } else if (ascName.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.title.localeCompare(a.title));
+    }
+}
+let ascPrice = ref(true)
+function sortPrice() {
+    ascPrice.value = !ascPrice.value
+    if (ascPrice.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.price - b.price);
+    } else if (ascPrice.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.price - a.price);
+    }
 
+}
+let ascRating = ref(true)
+function sortRating() {
+    ascRating.value = !ascRating.value
+    if (ascRating.value === true) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => a.rating.rate - b.rating.rate);
+    } else if (ascRating.value === false) {
+        store.allProduct = store.filteredName.slice().sort((a, b) => b.rating.rate - a.rating.rate);
+    }
+
+}
 </script>
 
 <template>
 
-    <table class="w-fit text-sm text-left rtl:text-right mx-auto">
+    <table class="w-fit text-sm text-left rtl:text-right mx-auto sm:w-1/3">
         <thead class=" text-gray-100 uppercase bg-gray-600 border-4 ">
             <tr>
                 <th scope="col" class="px-16 py-3">
@@ -107,7 +136,7 @@ function addCart(product) {
                 </td>
                 <td class="px-2 py-4">
                     <button @click="addCart(product)"
-                        class="text-gray-900 text-xs bg-gray-100 rounded-lg p-1 px-3 text-center hover:bg-slate-300">Add
+                        class="text-gray-100 text-xs bg-gray-600 rounded-lg p-1 px-3 text-center hover:scale-110 transition-transform fill-gray-200">Add
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
                             <path
                                 d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96zM252 160c0 11 9 20 20 20h44v44c0 11 9 20 20 20s20-9 20-20V180h44c11 0 20-9 20-20s-9-20-20-20H356V96c0-11-9-20-20-20s-20 9-20 20v44H272c-11 0-20 9-20 20z" />
