@@ -12,7 +12,7 @@ const totalPrice = computed(() => cartStore.totalPrice);
 const totalQuantity = computed(() => cartStore.totalQuantity);
 
 function addQuantity(product) {
-  cartStore.add(product, 10);
+  cartStore.add(product);
 }
 function subtractQuantity(product) {
   cartStore.subtract(product);
