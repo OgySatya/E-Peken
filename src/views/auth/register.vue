@@ -24,6 +24,7 @@ function registerUser() {
         store.addUser()
         warning.value = false
         success.value = true
+        alert("your new account has been registered");
     } else {
         warning.value = true;
         success.value = false;
