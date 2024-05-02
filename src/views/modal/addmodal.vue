@@ -1,0 +1,29 @@
+<script setup>
+import { ref } from 'vue';
+const props = defineProps({
+    data: Object,
+
+})
+
+</script>
+<template>
+    <div
+      class="inset-0 fixed left-0 top-0 bg-gray-500 bg-opacity-50"
+    >
+      <div
+        class="flex justify-center text-center mt-56"
+      >
+        <div
+          class="bg-white bg-opacity-80 text-black rounded-lg text-center shadow-xl p-6 w-64"
+          role="dialog"
+          aria-modal="true"
+        >
+        <div class="w-40 mx-auto text-xl" v-for="add in data">
+                     <img :src="add.image" class="mx-auto">
+                     {{ add.title }}
+                  </div>
+          <h2 class="text-lg font-bold">item added to Cart</h2>
+        </div>
+      </div>
+    </div>
+</template>

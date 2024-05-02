@@ -73,7 +73,8 @@ function logout() {
 <template>
     <div class="flex h-max mx-2">
         <div class="left-0 flex-row-reverse hidden md:block">
-            <div :class="[open ? 'flex justify-between' : 'grid gap-5']"
+            <transition>
+                <div :class="[open ? 'flex justify-between' : 'grid gap-5']"
                 class=" transition-transform duration-1000 mb-2">
                 <button @click.prevent="toggle()"
                     class="w-12 h-max p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
@@ -82,7 +83,6 @@ function logout() {
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
                             d="M5 7h14M5 12h14M5 17h14" />
                     </svg>
-
                 </button>
                 <button @click.prevent="$emit('add', true)"
                     class="w-12 h-max p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
@@ -91,8 +91,6 @@ function logout() {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z" />
                     </svg>
-
-
                 </button>
                 <button @click.prevent="$emit('add', false)"
                     class="w-12 h-max p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
@@ -104,6 +102,8 @@ function logout() {
                 </button>
             </div>
 
+            </transition>
+            
             <div class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg"
                 :class="[open ? 'max-w-lg' : 'max-w-0']">
                 <div class="w-60 grid">

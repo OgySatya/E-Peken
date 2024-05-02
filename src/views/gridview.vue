@@ -1,12 +1,14 @@
 <script setup>
+import { ref } from 'vue';
 import { useCartStore } from '../cartstore.js'
-
+import modaldal from './modal/addmodal.vue'
 const store = useCartStore()
 
 const props = defineProps({
     data: Array,
 
 })
+const modal = ref(false)
 function addCart(product) {
     if (!store.cartData.some(item => item.title === product.title)) {
         product.count = 1;
@@ -16,11 +18,24 @@ function addCart(product) {
         const index = store.cartData.findIndex(item => item.title === product.title)
         ++store.cartData[index].count
     }
+    modal.value = !modal.value
+    setTimeout(() => {
+        modal.value = !modal.value
+    }, 1500)
 }
 
 </script>
 
 <template>
+             <section>
+        <Teleport to="body">
+          <Transition>
+            <modaldal v-if="modal"
+            :data="store.product"/>
+          </Transition>
+        </Teleport>
+        
+    </section>
     <section>
         <ul class="grid grid-cols-3 gap-4 w-fit mx-auto">
             <li v-for="product in data" :key="product.id"

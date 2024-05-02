@@ -7,7 +7,7 @@ const store = useCartStore()
 <template>
   <div class="flex flex-col items-center justify-center mt-32">
     <div class="flex flex-col">
-      <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5" :style="`width: ${percent}%`"></div>
+      <div class="fixed inset-x-0 top-0 z-50 h-0.5 mt-0.5"></div>
       <nav class="flex justify-around py-2 bg-white/80
             backdrop-blur-md shadow-md w-full
             fixed top-0 left-0 right-0 z-10">
