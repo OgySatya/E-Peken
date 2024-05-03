@@ -8,6 +8,7 @@ import cart from './views/cart.vue'
 import about from './views/about.vue'
 import login from './views/auth/login.vue'
 import register from './views/auth/register.vue'
+import useAuthStore from './stores/auth'
 
 const routes = [
   { path: '/', component: home },
@@ -27,11 +28,12 @@ const router = createRouter({
   routes,
 })
 router.beforeEach((to, from, next) => {
-  const bolehLogin = JSON.parse(localStorage.getItem("auth"));
-  if (to.meta.requiresAuth && !bolehLogin){
+  const authStore = useAuthStore();
+  console.log('authStore.isLoggedIn :>> ', authStore.isLoggedIn);
+  if (to.meta.requiresAuth && !authStore.isLoggedIn){
     next({path : '/login',})
   }
-  if(to.path === "/login" && bolehLogin ){
+  if(to.path === "/login" && authStore.isLoggedIn ){
     next({path : '/'});
   } 
   else next();
