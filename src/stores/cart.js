@@ -24,12 +24,12 @@ const useCartStore = defineStore('cart', {
     },
     subtract(selectedProduct) {
       const productFoundIndex = this.products.findIndex(product => product.id === selectedProduct.id);
-      if (productFoundIndex > -1) {
+      if (productFoundIndex > -1 && this.products[productFoundIndex].quantity > 0) {
         this.products[productFoundIndex].quantity -= 1;
       }
-      if (this.products[productFoundIndex].quantity <= 0) {
-        this.remove(selectedProduct.id);
-      }
+      // if (this.products[productFoundIndex].quantity <= 0) {
+      //   this.remove(selectedProduct.id);
+      // }
     },
     remove(productId) {
       this.products = this.products.filter(product => product.id !== productId)

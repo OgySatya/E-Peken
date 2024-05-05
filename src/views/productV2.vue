@@ -14,37 +14,28 @@ onMounted(async () => {
   }
 });
 
-const currentPage = ref(1);
-const page = ref(6);
 const keyword = ref("");
 
 watch(keyword, (value) => productStore.search(value));
 
-const products = computed(() => productStore.filteredProducts);
+const products = computed(() => productStore.paginatedData);
 
-// const totalPages = computed(() => {
-//   return Math.ceil(store.filteredName.length / page.value);
-// });
+function previousPage() {
+  if (productStore.currentPage > 1) {
+    productStore.currentPage--;
+  }
+}
 
-// const paginatedData = computed(() => {
-//   const startIndex = (currentPage.value - 1) * page.value;
-//   const endIndex = startIndex + page.value;
-//   return store.filteredName.slice(startIndex, endIndex);
-// });
-
-// function previousPage() {
-//   if (currentPage.value > 1) {
-//     currentPage.value--;
-//   }
-// }
-
-// function nextPage() {
-//   if (currentPage.value < totalPages.value) {
-//     currentPage.value++;
-//   }
-// }
+function nextPage() {
+  if (productStore.currentPage < productStore.totalPages) {
+    productStore.currentPage++;
+  }
+}
+function toPage(id) {
+  productStore.currentPage = id
+}
 function gridList(lean) {
-  page.value = lean ? 6 : 10;
+  productStore.pageSize = lean ? 6 : 10;
   viewType.value = lean;
 }
 const viewType = ref(true);
@@ -54,24 +45,35 @@ const viewType = ref(true);
   <div class="flex w-full">
     <sidebar @add="(bool) => gridList(bool)" />
     <div class="grid w-auto mx-auto">
-      <form
-        class="justify-center mx-auto mb-5"
-      >
-        <input
-          v-model="keyword"
-          type="text"
-          placeholder="Cari Sesuatu"
-          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-80"
-        />
+      <form class="justify-center mx-auto mb-5">
+        <input v-model="keyword" type="text" placeholder="Cari Sesuatu"
+          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-80" />
       </form>
       <div>
         <gridview v-if="viewType" :data="products" />
         <listview class="" v-else :data="products" />
       </div>
+      <nav class="w-auto mx-auto mt-5">
+        <ul class="inline-flex -space-x-px text-base h-10">
+          <li>
+            <button @click="previousPage()"
+              class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-teal-300 border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</button>
+          </li>
+          <li v-for="page in productStore.pageRange">
+            <button @click="toPage(page)" :class="{ 'bg-teal-300 text-neutral-100': productStore.currentPage === page }"
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-200 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">{{
+      page }}</button>
+          </li>
+          <li>
+            <button @click="nextPage()"
+              class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-teal-300  border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </template>
-<style scoped>
+<style>
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
