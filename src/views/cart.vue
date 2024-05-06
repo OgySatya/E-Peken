@@ -2,6 +2,7 @@
 import { RouterLink } from "vue-router";
 import useCartStore from "@/stores/cart";
 import { ref, computed } from "vue";
+import payment from "./modal/paymentmodal.vue";
 
 const cartStore = useCartStore();
 const alamat = ref(0);
@@ -37,10 +38,25 @@ const totalPay =
       Number(diskon.value)
     ).toFixed(2);
   }) || 0;
+const showModal = ref(true);
+function checkout() {
+showModal.value = !showModal.value;
+}
 </script>
 <template>
+  <div>
+  <Teleport to="body">
+      <Transition>
+        <payment v-if="showModal" 
+          :data="cartStore"
+          :total="totalPay"
+          :save="diskon"
+          @back="() => checkout()" />
+      </Transition>
+    </Teleport>
+  </div>
   <section class="w-max mx-auto">
-    <div class="w-full px-4 md:px-5 lg-6 mx-auto flex z-10">
+    <div class="w-full px-4 md:px-5 mx-auto flex z-10">
       <div class="grid grid-cols-12">
         <div class="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
           <div class="flex items-center justify-between pb-8 border-b border-gray-300">
@@ -146,7 +162,7 @@ const totalPay =
           </div>
         </div>
         <div
-          class="col-span-12 xl:col-span-4 bg-gray-100 w-full max-xl:px-6 max-w-3xl xl:max-w-lg mx-auto lg:pl-8 py-24">
+          class="col-span-12 xl:col-span-4 bg-gray-100 w-full  mx-auto  p-20 ">
           <h2 class="font-manrope font-bold text-3xl leading-10 text-black pb-8 border-b-2 border-gray-300">
             Order Summary
           </h2>
@@ -204,7 +220,7 @@ const totalPay =
                   $ {{ totalPay || 0 }}
                 </p>
               </div>
-              <button
+              <button @click="checkout()"
                 class="w-full text-center bg-indigo-600 rounded-xl py-3 px-6 font-semibold text-lg text-white transition-all duration-500 hover:bg-indigo-700">
                 Checkout
               </button>
