@@ -2,15 +2,16 @@
 import { ref, onMounted, computed } from "vue";
 import useProductStore from "@/stores/product";
 import useAuthStore from "@/stores/auth";
-import useUserStore from "@/stores/user";
 import useCartStore from "@/stores/cart";
 import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const productStore = useProductStore();
-const userStore = useUserStore();
 const cartStore = useCartStore();
 const router = useRouter();
+const props = defineProps({
+  side: Boolean,
+});
 const emit = defineEmits(["add"]);
 const radio = ref()
 
@@ -18,7 +19,7 @@ onMounted(async () => {
   await productStore.getCategories();
 });
 
-const open = ref(false);
+const open = computed(() => props.side)
 
 const categories = computed(() => productStore.categories);
 
@@ -41,9 +42,7 @@ function sortRating() {
   ascRating.value = !ascRating.value;
   productStore.sortByrating(ascRating.value)
 }
-function toggle() {
-  open.value = !open.value;
-}
+
 const sortNav = ref(false);
 function sort() {
   sortNav.value = !sortNav.value;
@@ -60,34 +59,6 @@ function logout() {
 <template>
   <div class="flex h-max mx-2 ">
     <div class="left-0 flex-row-reverse hidden md:block">
-      <transition>
-        <div class="transition-transform duration-1000 mb-2 flex justify-between">
-          <button @click.prevent="toggle()"
-            class="p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
-            <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
-            </svg>
-          </button>
-          <button @click.prevent="$emit('add', true)" :class="[open ? '' : 'hidden']"
-            class=" p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
-            <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z" />
-            </svg>
-          </button>
-          <button @click.prevent="$emit('add', false)" :class="[open ? '' : 'hidden']"
-            class="p-1 my-auto rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
-            <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-              height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
-            </svg>
-          </button>
-        </div>
-      </transition>
-
       <div class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg"
         :class="[open ? 'max-w-lg' : 'max-w-0']">
         <div class="w-60 grid p-5">

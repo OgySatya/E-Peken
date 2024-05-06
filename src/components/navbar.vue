@@ -56,15 +56,24 @@ function logout() {
               </svg>
             </div>
           </router-link>
-          <button @click="logout"
+          <button @click="logout" v-if="authStore.isLoggedIn"
             class="flex text-gray-600 cursor-pointer transition-colors duration-300 font-semibold">
-            <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
+            <svg class="fill-current h-7 w-7 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
               xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
               <path
                 d="M10,17V14H3V10H10V7L15,12L10,17M10,2H19A2,2 0 0,1 21,4V20A2,2 0 0,1 19,22H10A2,2 0 0,1 8,20V18H10V20H19V4H10V6H8V4A2,2 0 0,1 10,2Z" />
             </svg>
-            Log Out
+            Logout
           </button>
+          <router-link to="/login" v-else
+            class="flex text-gray-600 cursor-pointer transition-colors duration-300 font-semibold">
+            <svg class="w-7 h-7 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+            Login
+          </router-link>
         </div>
       </nav>
     </div>
