@@ -61,7 +61,7 @@ function logout() {
     <div class="left-0 flex-row-reverse hidden md:block">
       <div class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg"
         :class="[open ? 'max-w-lg' : 'max-w-0']">
-        <div class="w-60 grid p-5">
+        <div class="w-60 grid px-5">
           <div
             class="hidden md:block transition-all duration-700 relative h-[calc(100vh-2rem)] max-w-[20rem] flex-col rounded-xl bg-clip-border text-gray-700">
             <div class="mb-2 mx-auto">

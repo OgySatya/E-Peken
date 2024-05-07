@@ -49,27 +49,25 @@ function toggel() {
   <div class="flex w-full">
     <div class="grid">
       <section>
-        <div class="flex justify-between px-2 -mb-16 mt-16">
-          <button @click.prevent="toggel()"
-            class="p-1 h-fit rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
-            <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+        <div class="px-2 mt-16" :class="[open ? 'flex justify-between' : 'grid gap-5 relative']">
+          <button @click.prevent="toggel()" 
+            class="p-1 rounded bg-gray-600 text-center hover:bg-gray-500 ">
+            <svg class="w-[40px] h-[40px] text-white" xmlns="http://www.w3.org/2000/svg" width="24"
               height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14" />
             </svg>
           </button>
-          <Transition>
-            <button @click="viewType = true" :class="[open ? '' : 'hidden']"
-              class=" p-1 h-fit rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-all duration-1000">
-              <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+            <button @click="viewType = true" 
+              class=" p-1 rounded bg-gray-600 text-center hover:bg-gray-500">
+              <svg class="w-[40px] h-[40px] text-white" xmlns="http://www.w3.org/2000/svg" width="24"
                 height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9.143 4H4.857A.857.857 0 0 0 4 4.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 10 9.143V4.857A.857.857 0 0 0 9.143 4Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286A.857.857 0 0 0 20 9.143V4.857A.857.857 0 0 0 19.143 4Zm-10 10H4.857a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286A.857.857 0 0 0 9.143 14Zm10 0h-4.286a.857.857 0 0 0-.857.857v4.286c0 .473.384.857.857.857h4.286a.857.857 0 0 0 .857-.857v-4.286a.857.857 0 0 0-.857-.857Z" />
               </svg>
             </button>
-          </Transition>
-          <button @click="viewType = false" :class="[open ? '' : 'hidden']"
-            class="p-1 h-fit rounded bg-gray-600 text-center focus:outline-none hover:bg-gray-500 transition-color duration-300">
-            <svg class="w-[40px] h-[40px] text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+          <button @click="viewType = false" 
+            class="p-1 rounded bg-gray-600 text-center hover:bg-gray-500 ">
+            <svg class="w-[40px] h-[40px] text-white" xmlns="http://www.w3.org/2000/svg" width="24"
               height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
@@ -79,14 +77,14 @@ function toggel() {
       </section>
       <sidebar :side="open" />
     </div>
-    <div class="grid w-auto mx-auto">
-      <form class="justify-center mx-auto mb-5">
+    <div class="grid w-full mx-auto">
+      <form class="mx-auto mb-5 ">
         <input v-model="keyword" type="text" placeholder="Cari Sesuatu"
-          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 w-80" />
+          class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" />
       </form>
       <div>
         <gridview v-if="viewType" :data="products" />
-        <listview class="" v-else :data="products" />
+        <listview v-else :data="products" />
       </div>
       <nav class="w-auto mx-auto mt-5">
         <ul class="inline-flex -space-x-px text-base h-10">

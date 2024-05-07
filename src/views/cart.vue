@@ -38,7 +38,7 @@ const totalPay =
       Number(diskon.value)
     ).toFixed(2);
   }) || 0;
-const showModal = ref(true);
+const showModal = ref(false);
 function checkout() {
 showModal.value = !showModal.value;
 }
@@ -162,7 +162,7 @@ showModal.value = !showModal.value;
           </div>
         </div>
         <div
-          class="col-span-12 xl:col-span-4 bg-gray-100 w-full  mx-auto  p-20 ">
+          class="col-span-12 xl:col-span-4 bg-gray-100 w-full mx-auto  p-16 ">
           <h2 class="font-manrope font-bold text-3xl leading-10 text-black pb-8 border-b-2 border-gray-300">
             Order Summary
           </h2>

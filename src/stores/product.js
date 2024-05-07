@@ -23,7 +23,7 @@ const useProductStore = defineStore('product', {
       return state.datax5.filter(product => product.title.toLowerCase().includes(state.filter.search.toLowerCase()))
     },
     totalPages(state) {
-      return Math.ceil(state.totalCount / state.pageSize)
+      return Math.ceil(this.filteredProducts.length / state.pageSize)
     },
     paginatedData(state) {
       const startIndex = (state.currentPage - 1) * state.pageSize;

@@ -30,7 +30,7 @@ function sortRating() {
 </script>
 
 <template>
-  <table class="w-fit text-sm text-left rtl:text-right mx-auto sm:w-1/3">
+  <table class="w-fit text-left mx-auto">
     <thead class="text-gray-100 uppercase bg-gray-600 border-4">
       <tr>
         <th scope="col" class="px-16 py-3">
