@@ -30,13 +30,13 @@ function sortRating() {
 </script>
 
 <template>
-  <table class="w-fit text-left mx-auto">
+  <table class="w-max mx-auto">
     <thead class="text-gray-100 uppercase bg-gray-600 border-4">
       <tr>
-        <th scope="col" class="px-16 py-3">
+        <th>
           <span class="sr-only">Image</span>
         </th>
-        <th scope="col" class="px-6 py-3">
+        <th class="px-6 py-3">
           <div class="flex items-center">
             Product Name
             <button @click="sortName()" class="ml-3">
@@ -49,7 +49,7 @@ function sortRating() {
             </button>
           </div>
         </th>
-        <th scope="col" class="px-6 py-3">
+        <th class="px-6 py-3">
           <div class="flex items-center">
             Rating
             <button @click="sortRating()" class="ml-3">
@@ -62,7 +62,7 @@ function sortRating() {
             </button>
           </div>
         </th>
-        <th scope="col" class="px-6 py-3">
+        <th class="px-6 py-3">
           <div class="flex items-center">
             Price
             <button @click="sortPrice()" class="ml-3">
@@ -75,19 +75,20 @@ function sortRating() {
             </button>
           </div>
         </th>
-        <th scope="col" class="sr-only">Action</th>
+        <th class="sr-only">Action</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="product in data" :key="product.id" class="border-b hover:bg-gray-100">
+      <tr v-for="product in data" :key="product.id"
+        class="border-b hover:bg-gray-100 dark:hover:bg-slate-500 dark:bg-gray-800">
         <td class="p-2 w-24 h-16 overflow-hidden">
           <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }">
-            <img :src="product.image" class="h-20 mx-auto" />
+            <img :src="product.image" class="h-20 mx-auto rounded-lg" />
           </RouterLink>
         </td>
-        <td class="px-2 py-2 w-64">
+        <td class="px-2 py-2 w-36 lg:w-fit">
           <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }"
-            class="text-wrap font-semibold text-gray-900 overflow-hidden">
+            class="text-wrap font-semibold text-gray-900 overflow-hidden dark:text-gray-200">
             {{ product.title }}
           </RouterLink>
         </td>
@@ -99,7 +100,7 @@ function sortRating() {
                 d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
             </svg>
 
-            <p class="ms-2 font-bold text-gray-900">
+            <p class="ms-2 font-bold text-gray-900 dark:text-gray-200">
               {{ product.rating.rate }}
             </p>
           </div>

@@ -33,22 +33,23 @@ const showModal = ref(false);
   <section class="text-gray-700 body-font">
     <div class="container p-5 mx-auto">
       <div class="lg:w-4/5 mx-auto flex flex-wrap border-2 rounded-2xl p-4">
-        <img class="lg:w-1/2 w-fit object-cover object-center mx-auto" :src="detailProduct.image" />
+        <img class="lg:w-1/2 w-fit object-cover object-center mx-auto rounded-xl" :src="detailProduct.image" />
         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-          <h2 class="title-font text-gray-500 tracking-widest">
+          <h2 class="title-font text-4xl text-gray-500 tracking-widest dark:text-gray-400">
             PRODUCT NAME
           </h2>
-          <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
+          <h1 class="text-gray-900 text-3xl title-font font-medium mb-1 dark:text-gray-200">
             {{ detailProduct.title }}
           </h1>
           <h3 class="text-white text-xl title-font font-medium mb-3 bg-stone-700 capitalize w-fit px-2 rounded">
             {{ detailProduct.category }}
           </h3>
           <hr>
-          <p class="leading-relaxed my-3">{{ detailProduct.description }}</p>
+          <p class="leading-relaxed my-3 text-lg dark:text-gray-200">{{ detailProduct.description }}</p>
           <hr>
           <div class="flex mt-3">
-            <span class="title-font font-medium text-2xl text-gray-900">${{ detailProduct.price }}</span>
+            <span class="title-font font-medium text-2xl text-gray-900 dark:text-gray-200">${{ detailProduct.price
+              }}</span>
             <button @click="addToCart"
               class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
               Add to Cart
@@ -62,7 +63,7 @@ const showModal = ref(false);
                 <path d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
                   stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round" />
               </svg>
-              <RouterLink to="/product">Back to Shopping</RouterLink>
+              <RouterLink to="/productv2">Back to Shopping</RouterLink>
             </button>
           </div>
         </div>

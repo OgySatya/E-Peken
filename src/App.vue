@@ -7,4 +7,8 @@ import navbar from './components/navbar.vue'
   <RouterView />
 </template>
 
-<style scoped></style>
+<style>
+html.dark {
+  color-scheme: dark;
+}
+</style>

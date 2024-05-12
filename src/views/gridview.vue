@@ -9,14 +9,20 @@ const props = defineProps({
 });
 const selectedProduct = ref(null);
 const showModal = ref(false);
-function addCart(product) {
+function addCart(product, index) {
   selectedProduct.value = product;
   cartStore.add(product);
-  showModal.value = !showModal.value;
+  console.log(props.data)
+  props.data[index].added = true
   setTimeout(() => {
-    showModal.value = !showModal.value;
-    selectedProduct.value = null;
-  }, 1500);
+    props.data[index].added = false
+  }, 1500)
+
+  // showModal.value = !showModal.value;
+  // setTimeout(() => {
+  //   showModal.value = !showModal.value;
+  //   selectedProduct.value = null;
+  // }, 1500);
 }
 </script>
 
@@ -28,12 +34,12 @@ function addCart(product) {
       </Transition>
     </Teleport>
   </section>
-  <section>
-    <ul class="grid grid-cols-3 gap-4 w-full">
-      <li v-for="product in data" :key="product.id"
-        class="relative flex w-full flex-col overflow-hidden bg-white rounded-lg border-2 border-gray-500 shadow-md">
+  <section class="">
+    <ul class="grid grid-cols-1 gap-4 mx-auto lg:grid-cols-3">
+      <li v-for="(product, index) in data" :key="product.id"
+        class=" flex w-full flex-col overflow-hidden bg-white rounded-lg border-2 border-gray-500 shadow-md hover:bg-slate-100">
         <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }"
-          class="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
+          class="mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
           <img class="object-cover bg-red-400 mx-auto" :src="product.image" />
           <span
             class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">50%
@@ -43,21 +49,21 @@ function addCart(product) {
           <h5 class="tracking-tight text-slate-900 h-12 overflow-hidden text-center px-5">
             {{ product.title }}
           </h5>
-          <div class="mt-2 mb-5 flex items-center justify-between">
+          <div class="mt-2 flex items-center justify-between">
             <p>
               <span class="text-3xl font-bold text-slate-900">${{ product.price }}</span>
               <span class="text-sm text-slate-900 line-through">${{ product.price * 2 }}</span>
             </p>
             <div class="grid">
-              <div class="flex items-center">
-                <p
-                class="text-2xl bg-yellow-600 overflow-hidden text-transparent bg-clip-text":style="{width: `${product.rating.rate*12}%`}">
-                ✮✮✮✮✮
-              </p>
-              <!-- <div class="bg-slate-600 text-xs rounded-lg pl-2 text-white reverse max-w-60" :style="{width: `${stat.base_stat}%`}">{{ stat.base_stat }}</div> -->
-                <span class="w-1.5 h-1.5 mx-1.5 bg-gray-700 rounded-full"></span>
-                <span class="mr-2 rounded bg-yellow-200 px-2.5 py-1 font-semibold">{{ product.rating.rate
-                  }}</span>
+              <div class="flex justify-end">
+                <div class="w-24 mx-2">
+                  <p class="text-2xl bg-yellow-500 overflow-hidden bg-clip-text text-transparent "
+                    :style="{ width: `${product.rating.rate * 20}%` }">
+                    ✮✮✮✮✮</p>
+                </div>
+                <span class="mr-2 rounded bg-yellow-200 px-2.5 py-1 font-semibold">{{
+          product.rating.rate
+        }}</span>
               </div>
               <p class="font-medium text-gray-900 underline hover:no-underline text-right mr-2">
                 Reviews
@@ -65,8 +71,12 @@ function addCart(product) {
               </p>
             </div>
           </div>
-          <button @click="addCart(product)"
-            class="w-full flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
+          <span class="my-4">
+            <p v-show="product.added" class=" absolute text-center font-semibold text-xl text-green-500">Item
+              Added</p>
+          </span>
+          <button @click="addCart(product, index)"
+            class="w-full mt-8 flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300">
             <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-6 w-6" fill="none" viewBox="0 0 24 24"
               stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round"

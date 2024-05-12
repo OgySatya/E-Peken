@@ -57,13 +57,14 @@ function logout() {
 }
 </script>
 <template>
-  <div class="flex h-max mx-2 ">
-    <div class="left-0 flex-row-reverse hidden md:block">
-      <div class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg"
+  <div class="h-max mx-2 ">
+    <div class="left-0 flex-row-reverse fixed lg:relative">
+      <div
+        class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg bg-opacity-90"
         :class="[open ? 'max-w-lg' : 'max-w-0']">
         <div class="w-60 grid px-5">
           <div
-            class="hidden md:block transition-all duration-700 relative h-[calc(100vh-2rem)] max-w-[20rem] flex-col rounded-xl bg-clip-border text-gray-700">
+            class="mt-10 transition-all duration-700 h-[calc(100vh-2rem)] max-w-[20rem] flex-col rounded-xl bg-clip-border text-gray-700">
             <div class="mb-2 mx-auto">
               <svg class="fill-gray-700 mx-auto" xmlns="http://www.w3.org/2000/svg"
                 xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="_x32_" width="70px" height="70px"

@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
     next({path : '/login',})
   }
   if(to.path === "/login" && authStore.isLoggedIn ){
-    next({path : '/'});
+    next({path : '/productv2'});
   } 
   else next();
 })
