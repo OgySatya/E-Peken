@@ -45,7 +45,6 @@ function toggel() {
 <template>
   <div class="flex w-full">
     <div class="grid">
-
       <sidebar :side="open" />
     </div>
     <div class="grid mx-auto w-fit">

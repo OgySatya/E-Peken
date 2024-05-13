@@ -37,22 +37,22 @@ function addCart(product, index) {
   <section class="">
     <ul class="grid grid-cols-1 gap-4 mx-auto lg:grid-cols-3">
       <li v-for="(product, index) in data" :key="product.id"
-        class=" flex w-full flex-col overflow-hidden bg-white rounded-lg border-2 border-gray-500 shadow-md hover:bg-slate-100">
+        class=" flex w-full flex-col overflow-hidden bg-white rounded-lg border-2 border-gray-500 shadow-md hover:bg-slate-100 dark:bg-slate-400">
         <RouterLink :to="{ name: 'productinfo', params: { id: product.id } }"
           class="mx-3 mt-3 flex h-60 overflow-hidden rounded-xl" href="#">
-          <img class="object-cover bg-red-400 mx-auto" :src="product.image" />
+          <img class="object-cover bg-red-400 mx-auto rounded-xl" :src="product.image" />
           <span
             class="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">50%
             OFF</span>
         </RouterLink>
         <div class="mt-4 p-5">
-          <h5 class="tracking-tight text-slate-900 h-12 overflow-hidden text-center px-5">
+          <h5 class="tracking-tight text-slate-900 h-12 overflow-hidden text-center px-5 dark:text-gray-200">
             {{ product.title }}
           </h5>
           <div class="mt-2 flex items-center justify-between">
             <p>
-              <span class="text-3xl font-bold text-slate-900">${{ product.price }}</span>
-              <span class="text-sm text-slate-900 line-through">${{ product.price * 2 }}</span>
+              <span class="text-3xl font-bold text-slate-900 dark:text-gray-200">${{ product.price }}</span>
+              <span class="text-sm text-slate-900 line-through dark:text-white">${{ product.price * 2 }}</span>
             </p>
             <div class="grid">
               <div class="flex justify-end">
@@ -61,11 +61,11 @@ function addCart(product, index) {
                     :style="{ width: `${product.rating.rate * 20}%` }">
                     ✮✮✮✮✮</p>
                 </div>
-                <span class="mr-2 rounded bg-yellow-200 px-2.5 py-1 font-semibold">{{
+                <span class="mr-2 rounded bg-yellow-500 px-2.5 py-1 font-semibold dark:text-gray-100">{{
           product.rating.rate
         }}</span>
               </div>
-              <p class="font-medium text-gray-900 underline hover:no-underline text-right mr-2">
+              <p class="font-medium text-gray-900 underline hover:no-underline text-right mr-2 dark:text-gray-200">
                 Reviews
                 {{ product.rating.count }}
               </p>

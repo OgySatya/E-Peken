@@ -13,7 +13,7 @@ const cartStore = useCartStore();
 const totalQuantity = computed(() => cartStore.totalQuantity);
 function logout() {
   authStore.logout();
-  router.push({ path: "/" });
+  router.push({ path: "/login" });
 }
 </script>
 

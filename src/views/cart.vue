@@ -149,14 +149,13 @@ function checkout() {
             </div>
           </div>
         </div>
-
-        <div class="col-span-12 xl:col-span-4 bg-gray-100 w-full mx-auto  p-10 dark:bg-gray-800">
-          <h2
-            class="font-manrope text-center font-bold text-3xl leading-10 text-black pb-8 border-b-2 border-gray-300 dark:text-gray-200">
+        <div
+          class="col-span-12 xl:col-span-4 bg-gray-100 w-full  mx-auto  p-14  dark:bg-slate-600">
+          <h2 class="font-manrope font-bold text-3xl leading-10 text-black pb-8 border-b-2 border-gray-300">
             Order Summary
           </h2>
           <div class="mt-3">
-            <div class="flex items-center justify-between p-6 dark:text-gray-200">
+            <div class="flex items-center justify-between p-4 dark:text-gray-200">
               <p class="font-normal text-lg leading-8 text-black dark:text-gray-200">
                 {{ totalQuantity }} Items
               </p>
@@ -205,7 +204,7 @@ function checkout() {
                 <p class="font-semibold text-2xl leading-8 text-amber-700">
                   Cost :
                 </p>
-                <p class="font-bold text-2xl leading-8 text-indigo-600">
+                <p class="font-bold text-2xl leading-8 text-indigo-600 dark:text-sky-300">
                   $ {{ totalPay || 0 }}
                 </p>
               </div>

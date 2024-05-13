@@ -53,11 +53,11 @@ function category() {
 }
 function logout() {
   authStore.logout();
-  router.push({ path: "/" });
+  router.push({ path: "/login" });
 }
 </script>
 <template>
-  <div class="h-max mx-2 ">
+  <div class="h-max ">
     <div class="left-0 flex-row-reverse fixed lg:relative">
       <div
         class="transition-all duration-700 bg-neutral-200 overflow-hidden flex justify-center rounded-lg bg-opacity-90"

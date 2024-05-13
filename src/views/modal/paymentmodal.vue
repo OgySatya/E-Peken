@@ -25,7 +25,7 @@ function payment(){
 <template>
      <div class="inset-0 fixed left-0 top-0 bg-gray-500 bg-opacity-50">
       <div class="w-max mx-auto mt-40 bg-white p-10 rounded-2xl bg-opacity-50">
-            <div class="flex bg-gray-100 px-6 py-8 rounded-md w-full">
+            <div class="flex bg-gray-100 px-6 py-8 rounded-t-md w-full">
               <div class="w-full">
                 <div class="flex items-center w-full ">
                   <div class="w-8 h-8 shrink-0 mx-[-1px] bg-[#333] p-1.5 flex items-center justify-center rounded-full">
@@ -59,12 +59,12 @@ function payment(){
                 </div>
               </div>
             </div>
-            <div class="bg-gray-100 px-6 rounded-md w-full">
+            <div class="bg-gray-100 px-6 rounded-b-md w-full">
                 <div class="text-center">
                 <h2 class="text-2xl font-extrabold text-[#333]">Payment</h2>
                 <h2 class="text-5xl font-extrabold text-[#333]">${{totalAll}}</h2>
             </div>
-                <ul class="mt-10 space-y-6 pb-4">
+                <ul class="mt-10 space-y-6 pb-4 dark:text-gray-600">
                     <li class="flex flex-wrap gap-4 text-base">Original price <span class="ml-auto font-bold">${{ data.totalPrice }}</span></li>
                     <li class="flex flex-wrap gap-4 text-base">Savings <span class="ml-auto font-bold text-emerald-500">${{save}}</span></li>
                     <li class="flex flex-wrap gap-4 text-base">Cost <span class="ml-auto font-bold text-emerald-500">${{total }}</span></li>
